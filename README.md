@@ -1,0 +1,100 @@
+# Clínica Veterinaria - Módulo Mascotas (GA7-220501096-AA3-EV01)
+
+Módulo de software desarrollado con **Spring Boot**, **Spring Data JPA**
+y **MySQL**, que implementa el CRUD (Create, Read, Update, Delete) de
+la entidad **Mascota** para el sistema de gestión de una clínica
+veterinaria, dando cumplimiento a los requisitos de la evidencia:
+
+- Código organizado en capas (`model`, `repository`, `services`,
+  `controller`), con **comentarios** explicando el propósito de cada
+  clase y método.
+- **Estándares de codificación**: clases en PascalCase
+  (`Mascota`, `MascotaController`), atributos y métodos en camelCase
+  (`idMascota`, `nomMascota`, `obtenerTodas()`), paquetes en minúsculas.
+- Conexión a base de datos MySQL mediante **Spring Data JPA** /
+  **JDBC** (`application.properties`).
+- CRUD completo expuesto como servicios REST (`/mascotas/nuevo`,
+  `/mascotas/mostrar`, `/mascotas/modificar`, `/mascotas/{id}`).
+- Proyecto gestionado con **Maven** y control de versiones **Git**.
+
+## Estructura del proyecto
+
+```
+veterinaria/
+├── pom.xml
+├── sql/clinicaveterinaria.sql
+└── src/main/
+    ├── java/com/clinicaveterinaria/veterinaria/
+    │   ├── VeterinariaApplication.java   (clase principal @SpringBootApplication)
+    │   ├── model/Mascota.java            (entidad JPA)
+    │   ├── repository/MascotaRepository.java
+    │   ├── services/MascotaService.java          (interfaz)
+    │   ├── services/MascotaServiceImpl.java       (implementación)
+    │   └── controller/MascotaController.java     (endpoints REST)
+    └── resources/application.properties
+```
+
+## Requisitos previos
+
+- JDK 17+, Apache Maven 3.8+, MySQL 8 / MariaDB 10.
+
+## 1. Crear la base de datos
+
+```
+mysql -u root -p < sql/clinicaveterinaria.sql
+```
+
+Si se prefiere, Spring Data JPA puede crear la tabla automáticamente
+gracias a `spring.jpa.hibernate.ddl-auto=update`; el script solo deja
+además dos registros de ejemplo.
+
+> Ajustar usuario/clave de `application.properties` según la
+> configuración local de MySQL.
+
+## 2. Ejecutar la aplicación
+
+```
+cd veterinaria
+mvn spring-boot:run
+```
+
+La aplicación queda disponible en `http://localhost:8080`.
+
+### Alternativa en NetBeans
+
+Abrir NetBeans → *File → Open Project* → seleccionar la carpeta
+`veterinaria` (NetBeans reconoce el `pom.xml` automáticamente) → clic
+derecho → *Run*.
+
+## 3. Probar los endpoints (Postman o curl)
+
+| Acción              | Método | Endpoint              |
+|---------------------|--------|------------------------|
+| Crear mascota       | POST   | `/mascotas/nuevo`      |
+| Listar mascotas     | GET    | `/mascotas/mostrar`    |
+| Modificar mascota   | POST   | `/mascotas/modificar`  |
+| Eliminar mascota    | POST   | `/mascotas/{id}`       |
+
+Ejemplo de cuerpo JSON para crear/modificar:
+
+```json
+{
+  "idMascota": 1,
+  "nomMascota": "Max",
+  "estado": "Estable",
+  "especie": "Canis lupus familiaris",
+  "edad": "3",
+  "raza": "Husky"
+}
+```
+
+## Control de versiones
+
+El proyecto incluye un repositorio Git local (`git init`) con commits
+incrementales por cada capa desarrollada. Para publicarlo en un
+repositorio remoto (GitHub/GitLab):
+
+```
+git remote add origin <URL-del-repositorio>
+git push -u origin main
+```
