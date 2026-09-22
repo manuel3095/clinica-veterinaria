@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDate;
 import lombok.Data;
 
 /**
@@ -38,11 +39,20 @@ public class Mascota {
     @Column
     private String especie;
 
-    // Edad de la mascota, en anios.
+    // Edad de la mascota, en anios (numero en formato texto).
     @Column
     private String edad;
 
     // Raza de la mascota (por ejemplo: "Husky", "San Bernardo").
     @Column
     private String raza;
+
+    // Fecha de ingreso de la mascota a la clinica.
+    @Column(name = "fecha_ingreso")
+    private LocalDate fechaIngreso;
+
+    // Correo electronico del propietario, para notificaciones de la clinica.
+    @Column(name = "correo_propietario")
+    private String correoPropietario;
 }
+
