@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Veterinaria - Gestión de Mascotas</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header class="cabecera">
+        <h1>Clínica Veterinaria</h1>
+        <p>Panel de gestión de mascotas (Front-end · GA7-220501096-AA4-EV03)</p>
+    </header>
+
+    <main class="contenedor">
+
+        <!-- Formulario para registrar o editar una mascota. El mismo formulario
+             se reutiliza para crear (accion=guardar) y para editar (accion=actualizar),
+             siguiendo el mismo patron ya usado en el backend Servlet/JSP. -->
+        <section class="tarjeta" id="seccionFormulario">
+            <h2 id="tituloFormulario">Registrar nueva mascota</h2>
+
+            <form id="formularioMascota" novalidate>
+                <input type="hidden" id="idMascota" name="idMascota">
+
+                <div class="campo">
+                    <label for="nomMascota">Nombre</label>
+                    <input type="text" id="nomMascota" name="nomMascota" required>
+                    <small class="error" id="errorNomMascota"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="estado">Estado clínico</label>
+                    <select id="estado" name="estado" required>
+                        <option value="">Seleccione...</option>
+                        <option value="Estable">Estable</option>
+                        <option value="Critico">Crítico</option>
+                        <option value="Hospitalizado">Hospitalizado</option>
+                    </select>
+                    <small class="error" id="errorEstado"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="especie">Especie</label>
+                    <input type="text" id="especie" name="especie" required>
+                    <small class="error" id="errorEspecie"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="edad">Edad (años)</label>
+                    <input type="text" id="edad" name="edad" required>
+                    <small class="error" id="errorEdad"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="raza">Raza</label>
+                    <input type="text" id="raza" name="raza" required>
+                    <small class="error" id="errorRaza"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="fechaIngreso">Fecha de ingreso</label>
+                    <input type="date" id="fechaIngreso" name="fechaIngreso" required>
+                    <small class="error" id="errorFechaIngreso"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="correoPropietario">Correo del propietario</label>
+                    <input type="email" id="correoPropietario" name="correoPropietario" required>
+                    <small class="error" id="errorCorreoPropietario"></small>
+                </div>
+
+                <div class="acciones-formulario">
+                    <button type="submit" class="boton">Guardar</button>
+                    <button type="button" class="boton boton-secundario" id="botonCancelar">Cancelar</button>
+                </div>
+
+                <p class="mensaje-servidor" id="mensajeServidor"></p>
+            </form>
+        </section>
+
+        <!-- Listado de mascotas, obtenido del backend (GET /mascotas/mostrar). -->
+        <section class="tarjeta">
+            <h2>Mascotas registradas</h2>
+            <table class="tabla-mascotas">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                        <th>Especie</th>
+                        <th>Edad</th>
+                        <th>Raza</th>
+                        <th>Fecha ingreso</th>
+                        <th>Correo propietario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpoTablaMascotas">
+                    <tr><td colspan="9" class="sin-datos">Cargando mascotas...</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="js/validaciones.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
