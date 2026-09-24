@@ -1,0 +1,176 @@
+/* Hoja de estilos del panel de gestión de mascotas.
+   Paleta en tonos verdes, coherente con la identidad de una clínica
+   veterinaria, y diseño responsivo básico con flexbox/grid. */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f4f6f5;
+    color: #1f2d24;
+    margin: 0;
+}
+
+.cabecera {
+    background-color: #2e7d4f;
+    color: #ffffff;
+    padding: 20px 32px;
+}
+
+.cabecera h1 {
+    margin: 0 0 4px 0;
+}
+
+.cabecera p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.contenedor {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 16px;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 800px) {
+    .contenedor {
+        grid-template-columns: 1fr;
+    }
+}
+
+.tarjeta {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tarjeta h2 {
+    margin-top: 0;
+    color: #2e7d4f;
+    border-bottom: 2px solid #2e7d4f;
+    padding-bottom: 8px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+}
+
+.campo label {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.campo input,
+.campo select {
+    padding: 8px;
+    border: 1px solid #c7d2cb;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.campo input.campo-invalido,
+.campo select.campo-invalido {
+    border-color: #b3261e;
+    background-color: #fdecea;
+}
+
+.error {
+    color: #b3261e;
+    min-height: 16px;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.acciones-formulario {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+}
+
+.boton {
+    background-color: #2e7d4f;
+    color: #ffffff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.boton:hover {
+    background-color: #256a42;
+}
+
+.boton-secundario {
+    background-color: #6b7a71;
+}
+
+.boton-eliminar {
+    background-color: #b3261e;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.boton-editar {
+    background-color: #3a6ea5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-right: 6px;
+}
+
+.mensaje-servidor {
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.mensaje-servidor.exito {
+    color: #2e7d4f;
+}
+
+.mensaje-servidor.fallo {
+    color: #b3261e;
+}
+
+.tabla-mascotas {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.tabla-mascotas th,
+.tabla-mascotas td {
+    border: 1px solid #e6ece9;
+    padding: 8px 10px;
+    text-align: left;
+}
+
+.tabla-mascotas th {
+    background-color: #2e7d4f;
+    color: #ffffff;
+}
+
+.tabla-mascotas tbody tr:nth-child(even) {
+    background-color: #f0f7f3;
+}
+
+.sin-datos {
+    text-align: center;
+    color: #6b7a71;
+    padding: 16px;
+}
