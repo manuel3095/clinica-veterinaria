@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Veterinaria - Registro e Inicio de Sesión</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header class="cabecera">
+        <h1>Clínica Veterinaria</h1>
+        <p>Servicio web de registro e inicio de sesión (GA7-220501096-AA5-EV01)</p>
+    </header>
+
+    <main class="contenedor" style="grid-template-columns: 1fr 1fr;">
+
+        <!-- Formulario de registro: POST /auth/registro -->
+        <section class="tarjeta">
+            <h2>Registrar usuario</h2>
+            <form id="formularioRegistro">
+                <div class="campo">
+                    <label for="usuarioRegistro">Usuario</label>
+                    <input type="text" id="usuarioRegistro" required>
+                </div>
+                <div class="campo">
+                    <label for="claveRegistro">Contraseña</label>
+                    <input type="password" id="claveRegistro" required>
+                </div>
+                <div class="acciones-formulario">
+                    <button type="submit" class="boton">Registrar</button>
+                </div>
+                <p class="mensaje-servidor" id="mensajeRegistro"></p>
+            </form>
+        </section>
+
+        <!-- Formulario de inicio de sesion: POST /auth/login -->
+        <section class="tarjeta">
+            <h2>Iniciar sesión</h2>
+            <form id="formularioLogin">
+                <div class="campo">
+                    <label for="usuarioLogin">Usuario</label>
+                    <input type="text" id="usuarioLogin" required>
+                </div>
+                <div class="campo">
+                    <label for="claveLogin">Contraseña</label>
+                    <input type="password" id="claveLogin" required>
+                </div>
+                <div class="acciones-formulario">
+                    <button type="submit" class="boton">Iniciar sesión</button>
+                </div>
+                <p class="mensaje-servidor" id="mensajeLogin"></p>
+            </form>
+        </section>
+    </main>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>
