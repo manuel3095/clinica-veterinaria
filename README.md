@@ -88,6 +88,44 @@ Ejemplo de cuerpo JSON para crear/modificar:
 }
 ```
 
+## 4. Servicio web de registro e inicio de sesión (AA5-EV01)
+
+Servicio REST que recibe un usuario y una contraseña. Si la
+autenticación es correcta, responde **"Autenticacion satisfactoria"**
+(HTTP 200); en caso contrario, responde **"Error en la autenticacion"**
+(HTTP 401). La contraseña nunca se almacena en texto plano: se guarda
+su hash SHA-256.
+
+| Acción            | Método | Endpoint          |
+|--------------------|--------|--------------------|
+| Registrar usuario  | POST   | `/auth/registro`   |
+| Iniciar sesión     | POST   | `/auth/login`      |
+
+Cuerpo JSON de ambos endpoints:
+
+```json
+{ "nombreUsuario": "recepcion1", "clave": "clave1234" }
+```
+
+Usuario de ejemplo creado por el script SQL: `recepcion1` /
+`clave1234`.
+
+Además de los endpoints, se incluye `auth.html` (formularios de
+registro e inicio de sesión) accesible en
+`http://localhost:8080/auth.html`.
+
+### Pruebas de la lógica de autenticación (sin Maven ni base de datos)
+
+```
+cd src/main/java
+javac com/clinicaveterinaria/veterinaria/util/UtilidadClave.java \
+      com/clinicaveterinaria/veterinaria/auth/AutenticacionLogica.java \
+      com/clinicaveterinaria/veterinaria/auth/PruebasAutenticacion.java
+java com.clinicaveterinaria.veterinaria.auth.PruebasAutenticacion
+```
+
+Debe mostrar `11 / 11 casos aprobados`.
+
 ## Control de versiones
 
 El proyecto incluye un repositorio Git local (`git init`) con commits
