@@ -1,0 +1,585 @@
+{
+  "info": {
+    "name": "Clinica Veterinaria - API REST (AA5-EV02)",
+    "description": "Coleccion de pruebas de la API de la Clinica Veterinaria. Aprendiz: Manuel Passo. Ejecutar con la variable baseUrl = http://localhost:3000",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Autenticacion (/auth)",
+      "item": [
+        {
+          "name": "Registro valido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: Usuario registrado correctamente\", function(){ pm.expect(pm.response.text()).to.include(\"Usuario registrado correctamente\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"manuel_vet\",\n  \"clave\": \"Clave2024seg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/registro",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "registro"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Registro - usuario duplicado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
+                  "pm.test(\"Cuerpo contiene: ya se encuentra registrado\", function(){ pm.expect(pm.response.text()).to.include(\"ya se encuentra registrado\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"manuel_vet\",\n  \"clave\": \"Clave2024seg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/registro",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "registro"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Registro - clave corta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
+                  "pm.test(\"Cuerpo contiene: al menos 8 caracteres\", function(){ pm.expect(pm.response.text()).to.include(\"al menos 8 caracteres\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"usuario_nuevo\",\n  \"clave\": \"123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/registro",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "registro"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Registro - usuario corto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
+                  "pm.test(\"Cuerpo contiene: al menos 3 caracteres\", function(){ pm.expect(pm.response.text()).to.include(\"al menos 3 caracteres\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"ab\",\n  \"clave\": \"Clave2024seg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/registro",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "registro"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login correcto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: Autenticacion satisfactoria\", function(){ pm.expect(pm.response.text()).to.include(\"Autenticacion satisfactoria\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"manuel_vet\",\n  \"clave\": \"Clave2024seg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login - clave incorrecta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 401\", function(){ pm.response.to.have.status(401); });",
+                  "pm.test(\"Cuerpo contiene: Error en la autenticacion\", function(){ pm.expect(pm.response.text()).to.include(\"Error en la autenticacion\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"manuel_vet\",\n  \"clave\": \"otraClave999\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login - usuario inexistente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 401\", function(){ pm.response.to.have.status(401); });",
+                  "pm.test(\"Cuerpo contiene: Error en la autenticacion\", function(){ pm.expect(pm.response.text()).to.include(\"Error en la autenticacion\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"fantasma\",\n  \"clave\": \"Clave2024seg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login - cuerpo vacio",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 401\", function(){ pm.response.to.have.status(401); });",
+                  "pm.test(\"Cuerpo contiene: Error en la autenticacion\", function(){ pm.expect(pm.response.text()).to.include(\"Error en la autenticacion\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login - metodo GET no permitido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 405\", function(){ pm.response.to.have.status(405); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mascotas (/mascotas)",
+      "item": [
+        {
+          "name": "Listar mascotas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: nomMascota\", function(){ pm.expect(pm.response.text()).to.include(\"nomMascota\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mascotas/mostrar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mascotas",
+                "mostrar"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear mascota valida",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: \"idMascota\"\", function(){ pm.expect(pm.response.text()).to.include(\"\"idMascota\"\"); });",
+                  "var d=pm.response.json(); pm.collectionVariables.set(\"idMascota\", d.idMascota);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nomMascota\": \"Luna\",\n  \"estado\": \"Estable\",\n  \"especie\": \"Felis catus\",\n  \"edad\": \"4\",\n  \"raza\": \"Siames\",\n  \"fechaIngreso\": \"2024-03-12\",\n  \"correoPropietario\": \"luna.duena@email.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mascotas/nuevo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mascotas",
+                "nuevo"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear mascota invalida",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
+                  "pm.test(\"Cuerpo contiene: es obligatorio\", function(){ pm.expect(pm.response.text()).to.include(\"es obligatorio\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nomMascota\": \"\",\n  \"estado\": \"Volando\",\n  \"especie\": \"Felis catus\",\n  \"edad\": \"abc\",\n  \"raza\": \"Siames\",\n  \"fechaIngreso\": \"2099-01-01\",\n  \"correoPropietario\": \"correo-malo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mascotas/nuevo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mascotas",
+                "nuevo"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Modificar mascota",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: Hospitalizado\", function(){ pm.expect(pm.response.text()).to.include(\"Hospitalizado\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idMascota\": {{idMascota}},\n  \"nomMascota\": \"Luna\",\n  \"estado\": \"Hospitalizado\",\n  \"especie\": \"Felis catus\",\n  \"edad\": \"4\",\n  \"raza\": \"Siames\",\n  \"fechaIngreso\": \"2024-03-12\",\n  \"correoPropietario\": \"luna.duena@email.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mascotas/modificar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mascotas",
+                "modificar"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar mascota",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: true\", function(){ pm.expect(pm.response.text()).to.include(\"true\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mascotas/{{idMascota}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mascotas",
+                "{{idMascota}}"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

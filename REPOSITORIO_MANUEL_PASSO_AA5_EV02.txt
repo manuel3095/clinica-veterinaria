@@ -1,0 +1,3 @@
+Repositorio de la evidencia GA7-220501096-AA5-EV02 (Clinica Veterinaria)
+Enlace: PENDIENTE - pegar aqui la URL de su repositorio GitHub (ej. https://github.com/USUARIO/veterinaria)
+Para publicarlo: git remote add origin <URL> ; git push -u origin master

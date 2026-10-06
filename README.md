@@ -136,3 +136,8 @@ repositorio remoto (GitHub/GitLab):
 git remote add origin <URL-del-repositorio>
 git push -u origin main
 ```
+
+## AA5-EV02 - Pruebas de la API (Postman)
+- `postman/Veterinaria_API.postman_collection.json`: coleccion importable en Postman (14 peticiones con pruebas automaticas).
+- `ENDPOINT.txt`: rutas de la API.
+- `sql/ServidorPruebasAPI.java`: servidor HTTP de verificacion (solo JDK) usado para ejecutar las pruebas cuando Spring Boot no esta disponible.
