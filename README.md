@@ -141,3 +141,10 @@ git push -u origin main
 - `postman/Veterinaria_API.postman_collection.json`: coleccion importable en Postman (14 peticiones con pruebas automaticas).
 - `ENDPOINT.txt`: rutas de la API.
 - `sql/ServidorPruebasAPI.java`: servidor HTTP de verificacion (solo JDK) usado para ejecutar las pruebas cuando Spring Boot no esta disponible.
+
+## AA5-EV03 - Diseño y desarrollo de servicios web
+Se amplió la API con servicios de consulta: `GET /mascotas/{id}`, `GET /mascotas/estado/{estado}`,
+`GET /mascotas/propietario?correo=` y `GET /auth/usuarios`; `modificar` ahora actualiza también
+`fechaIngreso` y `correoPropietario`, y `POST /mascotas/{id}` retorna `false` si el id no existe.
+Documentación: `docs/API_DOCUMENTACION.md` y `docs/openapi.yaml`. Endpoints: `ENDPOINT.txt`.
+Colección Postman con 20 peticiones: `postman/Veterinaria_API.postman_collection.json`.
