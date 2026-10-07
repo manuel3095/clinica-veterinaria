@@ -2,8 +2,13 @@ package com.clinicaveterinaria.veterinaria.auth;
 
 import com.clinicaveterinaria.veterinaria.model.Usuario;
 import com.clinicaveterinaria.veterinaria.repository.UsuarioRepository;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,5 +78,22 @@ public class AuthController {
             return ResponseEntity.ok(resultado);
         }
         return ResponseEntity.status(401).body(resultado);
+    }
+
+    /**
+     * Lista los usuarios registrados. Solo se exponen el identificador y
+     * el nombre de usuario; la clave (hash) nunca sale de la API.
+     * GET /auth/usuarios
+     */
+    @GetMapping("/usuarios")
+    public List<Map<String, Object>> listarUsuarios() {
+        List<Map<String, Object>> salida = new ArrayList<>();
+        for (Usuario u : usuarioRepository.findAll()) {
+            Map<String, Object> fila = new LinkedHashMap<>();
+            fila.put("idUsuario", u.getIdUsuario());
+            fila.put("nombreUsuario", u.getNombreUsuario());
+            salida.add(fila);
+        }
+        return salida;
     }
 }
