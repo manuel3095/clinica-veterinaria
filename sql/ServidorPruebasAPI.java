@@ -47,10 +47,15 @@ public class ServidorPruebasAPI {
         s.createContext("/mascotas/nuevo", ex -> seguro(ex, "POST", ServidorPruebasAPI::nuevaMascota));
         s.createContext("/mascotas/mostrar", ex -> seguro(ex, "GET", ServidorPruebasAPI::mostrar));
         s.createContext("/mascotas/modificar", ex -> seguro(ex, "POST", ServidorPruebasAPI::modificar));
+        s.createContext("/auth/usuarios", ex -> seguro(ex, "GET", ServidorPruebasAPI::usuarios));
+        s.createContext("/mascotas/propietario", ex -> seguro(ex, "GET", ServidorPruebasAPI::porPropietario));
+        s.createContext("/mascotas/estado/", ex -> seguro(ex, "GET", ServidorPruebasAPI::porEstado));
         s.createContext("/mascotas/", ex -> {
             String p = ex.getRequestURI().getPath();
-            if (p.matches("/mascotas/\\d+")) seguro(ex, "POST", ServidorPruebasAPI::eliminar);
-            else responder(ex, 404, "Not Found", "text/plain");
+            if (p.matches("/mascotas/\\d+")) {
+                if ("GET".equals(ex.getRequestMethod())) seguro(ex, "GET", ServidorPruebasAPI::porId);
+                else seguro(ex, "POST", ServidorPruebasAPI::eliminar);
+            } else responder(ex, 404, "Not Found", "text/plain");
         });
         s.start();
         System.out.println("Servidor de pruebas escuchando en http://localhost:" + puerto);
@@ -202,6 +207,55 @@ public class ServidorPruebasAPI {
         try (Connection c = con(); PreparedStatement ps = c.prepareStatement("DELETE FROM mascotas WHERE id_mascota=?")) {
             ps.setLong(1, id);
             responder(ex, 200, String.valueOf(ps.executeUpdate() > 0), "application/json");
+        }
+    }
+
+    // ------------------------------------------------- servicios EV03
+    static void usuarios(HttpExchange ex, String b) throws Exception {
+        StringBuilder sb = new StringBuilder("[");
+        try (Connection c = con(); Statement st = c.createStatement()) {
+            ResultSet r = st.executeQuery("SELECT id_usuario, nombre_usuario FROM usuario ORDER BY id_usuario");
+            boolean p = true;
+            while (r.next()) {
+                sb.append(p ? "" : ",").append("{\"idUsuario\":").append(r.getLong(1))
+                  .append(",\"nombreUsuario\":").append(json(r.getString(2))).append("}");
+                p = false;
+            }
+        }
+        responder(ex, 200, sb.append("]").toString(), "application/json");
+    }
+
+    static void listar(HttpExchange ex, String where, String valor) throws Exception {
+        StringBuilder sb = new StringBuilder("[");
+        try (Connection c = con(); PreparedStatement ps = c.prepareStatement(
+                "SELECT * FROM mascotas WHERE " + where + "=? ORDER BY id_mascota")) {
+            ps.setString(1, valor);
+            ResultSet r = ps.executeQuery();
+            boolean p = true;
+            while (r.next()) { sb.append(p ? "" : ",").append(fila(r)); p = false; }
+        }
+        responder(ex, 200, sb.append("]").toString(), "application/json");
+    }
+
+    static void porEstado(HttpExchange ex, String b) throws Exception {
+        String est = java.net.URLDecoder.decode(ex.getRequestURI().getPath().substring("/mascotas/estado/".length()), "UTF-8");
+        listar(ex, "estado", est);
+    }
+
+    static void porPropietario(HttpExchange ex, String b) throws Exception {
+        String q = ex.getRequestURI().getQuery();
+        Matcher m = Pattern.compile("(?:^|&)correo=([^&]*)").matcher(q == null ? "" : q);
+        if (!m.find()) { responder(ex, 400, "Falta el parametro correo", "text/plain"); return; }
+        listar(ex, "correo_propietario", java.net.URLDecoder.decode(m.group(1), "UTF-8"));
+    }
+
+    static void porId(HttpExchange ex, String b) throws Exception {
+        long id = Long.parseLong(ex.getRequestURI().getPath().substring("/mascotas/".length()));
+        try (Connection c = con(); PreparedStatement ps = c.prepareStatement("SELECT * FROM mascotas WHERE id_mascota=?")) {
+            ps.setLong(1, id);
+            ResultSet r = ps.executeQuery();
+            if (r.next()) responder(ex, 200, fila(r), "application/json");
+            else responder(ex, 404, "", "application/json");
         }
     }
 }
