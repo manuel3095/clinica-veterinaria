@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,6 +56,34 @@ public class MascotaController {
     @GetMapping("/mostrar")
     public Iterable<Mascota> obtenerTodas() {
         return mascotaService.obtenerTodas();
+    }
+
+    /**
+     * Consulta una mascota por su identificador.
+     * GET /mascotas/{id}  ->  200 con la mascota, o 404 si no existe.
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<Mascota> obtenerPorId(@PathVariable(value = "id") Long idMascota) {
+        Mascota mascota = mascotaService.obtenerPorId(idMascota);
+        return (mascota != null) ? ResponseEntity.ok(mascota) : ResponseEntity.notFound().build();
+    }
+
+    /**
+     * Lista las mascotas segun su estado clinico (Estable, Critico, Hospitalizado).
+     * GET /mascotas/estado/{estado}
+     */
+    @GetMapping("/estado/{estado}")
+    public List<Mascota> obtenerPorEstado(@PathVariable(value = "estado") String estado) {
+        return mascotaService.obtenerPorEstado(estado);
+    }
+
+    /**
+     * Lista las mascotas de un propietario a partir de su correo.
+     * GET /mascotas/propietario?correo=duena@email.com
+     */
+    @GetMapping("/propietario")
+    public List<Mascota> obtenerPorPropietario(@RequestParam("correo") String correo) {
+        return mascotaService.obtenerPorPropietario(correo);
     }
 
     /**
