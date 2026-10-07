@@ -1,6 +1,6 @@
 {
   "info": {
-    "name": "Clinica Veterinaria - API REST (AA5-EV02)",
+    "name": "Clinica Veterinaria - API REST (AA5-EV03)",
     "description": "Coleccion de pruebas de la API de la Clinica Veterinaria. Aprendiz: Manuel Passo. Ejecutar con la variable baseUrl = http://localhost:3000",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -385,6 +385,35 @@
               ]
             }
           }
+        },
+        {
+          "name": "Listar usuarios (sin claves)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: nombreUsuario\", function(){ pm.expect(pm.response.text()).to.include(\"nombreUsuario\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "usuarios"
+              ]
+            }
+          }
         }
       ]
     },
@@ -416,6 +445,128 @@
               "path": [
                 "mascotas",
                 "mostrar"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Consultar mascota por id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: Max\", function(){ pm.expect(pm.response.text()).to.include(\"Max\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mascotas/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mascotas",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Consultar mascota inexistente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 404\", function(){ pm.response.to.have.status(404); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mascotas/999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mascotas",
+                "999"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar por estado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: Apolo\", function(){ pm.expect(pm.response.text()).to.include(\"Apolo\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mascotas/estado/Hospitalizado",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mascotas",
+                "estado",
+                "Hospitalizado"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar por propietario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: Apolo\", function(){ pm.expect(pm.response.text()).to.include(\"Apolo\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mascotas/propietario?correo=duena@email.com",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mascotas",
+                "propietario"
+              ],
+              "query": [
+                {
+                  "key": "correo",
+                  "value": "duena@email.com"
+                }
               ]
             }
           }
@@ -575,6 +726,35 @@
               "path": [
                 "mascotas",
                 "{{idMascota}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar mascota inexistente (false)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: false\", function(){ pm.expect(pm.response.text()).to.include(\"false\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mascotas/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mascotas",
+                "999999"
               ]
             }
           }

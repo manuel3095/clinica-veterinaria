@@ -1,19 +1,19 @@
-ENDPOINT - API REST Clinica Veterinaria (GA7-220501096-AA5-EV02)
+ENDPOINT - API REST Clinica Veterinaria (GA7-220501096-AA5-EV03)
 Aprendiz: Manuel Passo
 URL base: http://localhost:3000
 
-SERVICIO WEB DE AUTENTICACION (AA5-EV01)
-POST  http://localhost:3000/auth/registro   Body JSON: {"nombreUsuario":"...","clave":"..."}
-      200 "Usuario registrado correctamente" | 400 mensaje de validacion
-POST  http://localhost:3000/auth/login      Body JSON: {"nombreUsuario":"...","clave":"..."}
-      200 "Autenticacion satisfactoria" | 401 "Error en la autenticacion"
+AUTENTICACION
+POST  http://localhost:3000/auth/registro                    Registrar usuario
+POST  http://localhost:3000/auth/login                       Iniciar sesion
+GET   http://localhost:3000/auth/usuarios                    Listar usuarios (sin claves)
 
-MODULO MASCOTAS (AA3-EV02)
-GET   http://localhost:3000/mascotas/mostrar      Lista las mascotas (200, arreglo JSON)
-POST  http://localhost:3000/mascotas/nuevo        Body: mascota JSON (200 mascota creada | 400 lista de errores)
-POST  http://localhost:3000/mascotas/modificar    Body: mascota JSON con idMascota (200 | 400)
-POST  http://localhost:3000/mascotas/{id}         Elimina la mascota (200 true/false)
+MASCOTAS
+GET   http://localhost:3000/mascotas/mostrar                 Listar todas
+GET   http://localhost:3000/mascotas/{id}                    Consultar por id (404 si no existe)
+GET   http://localhost:3000/mascotas/estado/{estado}         Listar por estado (Estable, Critico, Hospitalizado)
+GET   http://localhost:3000/mascotas/propietario?correo=...  Listar por correo del propietario
+POST  http://localhost:3000/mascotas/nuevo                   Crear
+POST  http://localhost:3000/mascotas/modificar               Modificar
+POST  http://localhost:3000/mascotas/{id}                    Eliminar (true/false)
 
-Body de mascota: {"nomMascota":"Luna","estado":"Estable","especie":"Felis catus","edad":"4",
-"raza":"Siames","fechaIngreso":"2024-03-12","correoPropietario":"luna.duena@email.com"}
-(estado permitido: Estable, Critico, Hospitalizado)
+Documentacion detallada: docs/API_DOCUMENTACION.md y docs/openapi.yaml
