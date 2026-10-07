@@ -2,6 +2,7 @@ package com.clinicaveterinaria.veterinaria.services;
 
 import com.clinicaveterinaria.veterinaria.model.Mascota;
 import com.clinicaveterinaria.veterinaria.repository.MascotaRepository;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,8 @@ public class MascotaServiceImpl implements MascotaService {
             mascotaActualizar.setEspecie(mascota.getEspecie());
             mascotaActualizar.setEdad(mascota.getEdad());
             mascotaActualizar.setRaza(mascota.getRaza());
+            mascotaActualizar.setFechaIngreso(mascota.getFechaIngreso());
+            mascotaActualizar.setCorreoPropietario(mascota.getCorreoPropietario());
             return mascotaRepository.save(mascotaActualizar);
         }
         // Si la mascota no existe, no se realiza ninguna modificacion.
@@ -51,7 +54,26 @@ public class MascotaServiceImpl implements MascotaService {
 
     @Override
     public Boolean eliminarMascota(Long idMascota) {
+        // Si el identificador no existe no hay nada que eliminar.
+        if (!mascotaRepository.existsById(idMascota)) {
+            return false;
+        }
         mascotaRepository.deleteById(idMascota);
         return true;
+    }
+
+    @Override
+    public Mascota obtenerPorId(Long idMascota) {
+        return mascotaRepository.findById(idMascota).orElse(null);
+    }
+
+    @Override
+    public List<Mascota> obtenerPorEstado(String estado) {
+        return mascotaRepository.findByEstado(estado);
+    }
+
+    @Override
+    public List<Mascota> obtenerPorPropietario(String correoPropietario) {
+        return mascotaRepository.findByCorreoPropietario(correoPropietario);
     }
 }

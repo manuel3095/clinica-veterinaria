@@ -1,6 +1,7 @@
 package com.clinicaveterinaria.veterinaria.services;
 
 import com.clinicaveterinaria.veterinaria.model.Mascota;
+import java.util.List;
 
 /**
  * Contrato de la capa de servicios para la entidad Mascota.
@@ -20,6 +21,15 @@ public interface MascotaService {
     // Actualiza los datos de una mascota existente.
     Mascota modificarMascota(Mascota mascota);
 
-    // Elimina una mascota por su identificador. Retorna true si se elimino con exito.
+    // Elimina una mascota por su identificador. Retorna true si existia y se elimino.
     Boolean eliminarMascota(Long idMascota);
+
+    // Busca una mascota por su identificador; retorna null si no existe.
+    Mascota obtenerPorId(Long idMascota);
+
+    // Lista las mascotas que se encuentran en un estado clinico dado.
+    List<Mascota> obtenerPorEstado(String estado);
+
+    // Lista las mascotas asociadas al correo de un propietario.
+    List<Mascota> obtenerPorPropietario(String correoPropietario);
 }
