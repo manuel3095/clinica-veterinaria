@@ -1,0 +1,150 @@
+openapi: 3.0.3
+info:
+  title: API REST - Clinica Veterinaria
+  version: 1.0.0
+  description: >
+    Servicios web del sistema de gestion de la Clinica Veterinaria
+    (GA7-220501096-AA5-EV03). Aprendiz: Manuel Passo.
+servers:
+  - url: http://localhost:3000
+    description: Servidor local
+tags:
+  - name: Autenticacion
+  - name: Mascotas
+paths:
+  /auth/registro:
+    post:
+      tags: [Autenticacion]
+      summary: Registrar un usuario del personal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Credenciales'}
+      responses:
+        '200': {description: Usuario registrado correctamente, content: {text/plain: {schema: {type: string}}}}
+        '400': {description: Dato invalido o usuario ya registrado, content: {text/plain: {schema: {type: string}}}}
+  /auth/login:
+    post:
+      tags: [Autenticacion]
+      summary: Iniciar sesion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Credenciales'}
+      responses:
+        '200': {description: Autenticacion satisfactoria, content: {text/plain: {schema: {type: string}}}}
+        '401': {description: Error en la autenticacion, content: {text/plain: {schema: {type: string}}}}
+  /auth/usuarios:
+    get:
+      tags: [Autenticacion]
+      summary: Listar usuarios registrados (sin claves)
+      responses:
+        '200':
+          description: Lista de usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/UsuarioPublico'}
+  /mascotas/mostrar:
+    get:
+      tags: [Mascotas]
+      summary: Listar todas las mascotas
+      responses:
+        '200':
+          description: Lista de mascotas
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/Mascota'}
+  /mascotas/{id}:
+    get:
+      tags: [Mascotas]
+      summary: Consultar una mascota por identificador
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: integer, format: int64}}
+      responses:
+        '200': {description: Mascota encontrada, content: {application/json: {schema: {$ref: '#/components/schemas/Mascota'}}}}
+        '404': {description: La mascota no existe}
+    post:
+      tags: [Mascotas]
+      summary: Eliminar una mascota
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: integer, format: int64}}
+      responses:
+        '200':
+          description: true si existia y se elimino; false si no existia
+          content: {application/json: {schema: {type: boolean}}}
+  /mascotas/estado/{estado}:
+    get:
+      tags: [Mascotas]
+      summary: Listar mascotas por estado clinico
+      parameters:
+        - {name: estado, in: path, required: true, schema: {type: string, enum: [Estable, Critico, Hospitalizado]}}
+      responses:
+        '200':
+          description: Lista (posiblemente vacia)
+          content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/Mascota'}}}}
+  /mascotas/propietario:
+    get:
+      tags: [Mascotas]
+      summary: Listar mascotas de un propietario
+      parameters:
+        - {name: correo, in: query, required: true, schema: {type: string, format: email}}
+      responses:
+        '200':
+          description: Lista (posiblemente vacia)
+          content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/Mascota'}}}}
+  /mascotas/nuevo:
+    post:
+      tags: [Mascotas]
+      summary: Registrar una mascota
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: '#/components/schemas/MascotaEntrada'}}}
+      responses:
+        '200': {description: Mascota creada, content: {application/json: {schema: {$ref: '#/components/schemas/Mascota'}}}}
+        '400': {description: Lista de errores de validacion, content: {application/json: {schema: {type: array, items: {type: string}}}}}
+  /mascotas/modificar:
+    post:
+      tags: [Mascotas]
+      summary: Modificar una mascota existente
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: '#/components/schemas/Mascota'}}}
+      responses:
+        '200': {description: Mascota actualizada, content: {application/json: {schema: {$ref: '#/components/schemas/Mascota'}}}}
+        '400': {description: Lista de errores de validacion, content: {application/json: {schema: {type: array, items: {type: string}}}}}
+components:
+  schemas:
+    Credenciales:
+      type: object
+      required: [nombreUsuario, clave]
+      properties:
+        nombreUsuario: {type: string, minLength: 3, example: manuel_vet}
+        clave: {type: string, minLength: 8, example: Clave2024seg}
+    UsuarioPublico:
+      type: object
+      properties:
+        idUsuario: {type: integer, format: int64}
+        nombreUsuario: {type: string}
+    MascotaEntrada:
+      type: object
+      required: [nomMascota, estado, especie, edad, raza, fechaIngreso, correoPropietario]
+      properties:
+        nomMascota: {type: string, example: Luna}
+        estado: {type: string, enum: [Estable, Critico, Hospitalizado]}
+        especie: {type: string, example: Felis catus}
+        edad: {type: string, pattern: '^[0-9]{1,2}$', example: '4'}
+        raza: {type: string, example: Siames}
+        fechaIngreso: {type: string, format: date, example: '2024-03-12'}
+        correoPropietario: {type: string, format: email}
+    Mascota:
+      allOf:
+        - {$ref: '#/components/schemas/MascotaEntrada'}
+        - type: object
+          properties:
+            idMascota: {type: integer, format: int64}
