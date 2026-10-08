@@ -27,6 +27,7 @@ estado del código al terminar esa evidencia (`git checkout aa4-ev03`, por ejemp
 
 | Evidencia | Tema | Etiqueta Git |
 |---|---|---|
+| GA7-220501096-AA2-EV02 | Módulos codificados y probados: versiones previas con Servlets/JSP (carpeta `evidencias/`, sin etiqueta) | — |
 | GA7-220501096-AA3-EV01 | Codificación de módulos (CRUD de mascotas) | `aa3-ev01` |
 | GA7-220501096-AA3-EV02 | Módulos codificados y probados (validaciones) | `aa3-ev02` |
 | GA7-220501096-AA4-EV03 | Componente front-end | `aa4-ev03` |
