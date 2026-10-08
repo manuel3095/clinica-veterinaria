@@ -1,13 +1,17 @@
 {
   "info": {
-    "name": "Clinica Veterinaria - API REST (AA5-EV03)",
-    "description": "Coleccion de pruebas de la API de la Clinica Veterinaria. Aprendiz: Manuel Passo. Ejecutar con la variable baseUrl = http://localhost:3000",
+    "name": "Clinica Veterinaria - API REST (AA5-EV04)",
+    "description": "Coleccion de pruebas de la API de la Clinica Veterinaria (AA5-EV04). Aprendiz: Manuel Passo. Ejecutar con el entorno Veterinaria_Local (baseUrl = http://localhost:3000). La coleccion es repetible: el usuario de prueba se genera con un sufijo aleatorio.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
     {
       "key": "baseUrl",
       "value": "http://localhost:3000"
+    },
+    {
+      "key": "usuarioNuevo",
+      "value": ""
     }
   ],
   "item": [
@@ -22,6 +26,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
                   "pm.test(\"Cuerpo contiene: Usuario registrado correctamente\", function(){ pm.expect(pm.response.text()).to.include(\"Usuario registrado correctamente\"); });"
                 ]
@@ -38,7 +43,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombreUsuario\": \"manuel_vet\",\n  \"clave\": \"Clave2024seg\"\n}",
+              "raw": "{\n  \"nombreUsuario\": \"{{usuarioNuevo}}\",\n  \"clave\": \"Clave2024seg\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -65,6 +70,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
                   "pm.test(\"Cuerpo contiene: ya se encuentra registrado\", function(){ pm.expect(pm.response.text()).to.include(\"ya se encuentra registrado\"); });"
                 ]
@@ -81,7 +87,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombreUsuario\": \"manuel_vet\",\n  \"clave\": \"Clave2024seg\"\n}",
+              "raw": "{\n  \"nombreUsuario\": \"{{usuarioNuevo}}\",\n  \"clave\": \"Clave2024seg\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -108,6 +114,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
                   "pm.test(\"Cuerpo contiene: al menos 8 caracteres\", function(){ pm.expect(pm.response.text()).to.include(\"al menos 8 caracteres\"); });"
                 ]
@@ -151,6 +158,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
                   "pm.test(\"Cuerpo contiene: al menos 3 caracteres\", function(){ pm.expect(pm.response.text()).to.include(\"al menos 3 caracteres\"); });"
                 ]
@@ -194,6 +202,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
                   "pm.test(\"Cuerpo contiene: Autenticacion satisfactoria\", function(){ pm.expect(pm.response.text()).to.include(\"Autenticacion satisfactoria\"); });"
                 ]
@@ -210,7 +219,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombreUsuario\": \"manuel_vet\",\n  \"clave\": \"Clave2024seg\"\n}",
+              "raw": "{\n  \"nombreUsuario\": \"{{usuarioNuevo}}\",\n  \"clave\": \"Clave2024seg\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -237,6 +246,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 401\", function(){ pm.response.to.have.status(401); });",
                   "pm.test(\"Cuerpo contiene: Error en la autenticacion\", function(){ pm.expect(pm.response.text()).to.include(\"Error en la autenticacion\"); });"
                 ]
@@ -253,7 +263,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombreUsuario\": \"manuel_vet\",\n  \"clave\": \"otraClave999\"\n}",
+              "raw": "{\n  \"nombreUsuario\": \"{{usuarioNuevo}}\",\n  \"clave\": \"otraClave999\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -280,6 +290,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 401\", function(){ pm.response.to.have.status(401); });",
                   "pm.test(\"Cuerpo contiene: Error en la autenticacion\", function(){ pm.expect(pm.response.text()).to.include(\"Error en la autenticacion\"); });"
                 ]
@@ -323,6 +334,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 401\", function(){ pm.response.to.have.status(401); });",
                   "pm.test(\"Cuerpo contiene: Error en la autenticacion\", function(){ pm.expect(pm.response.text()).to.include(\"Error en la autenticacion\"); });"
                 ]
@@ -366,6 +378,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 405\", function(){ pm.response.to.have.status(405); });"
                 ]
               }
@@ -394,6 +407,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
                   "pm.test(\"Cuerpo contiene: nombreUsuario\", function(){ pm.expect(pm.response.text()).to.include(\"nombreUsuario\"); });"
                 ]
@@ -428,8 +442,10 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
-                  "pm.test(\"Cuerpo contiene: nomMascota\", function(){ pm.expect(pm.response.text()).to.include(\"nomMascota\"); });"
+                  "pm.test(\"Cuerpo contiene: nomMascota\", function(){ pm.expect(pm.response.text()).to.include(\"nomMascota\"); });",
+                  "pm.test(\"Respuesta es un arreglo JSON\", function(){ pm.expect(pm.response.json()).to.be.an(\"array\"); });"
                 ]
               }
             }
@@ -457,6 +473,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
                   "pm.test(\"Cuerpo contiene: Max\", function(){ pm.expect(pm.response.text()).to.include(\"Max\"); });"
                 ]
@@ -486,6 +503,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 404\", function(){ pm.response.to.have.status(404); });"
                 ]
               }
@@ -514,8 +532,10 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
-                  "pm.test(\"Cuerpo contiene: Apolo\", function(){ pm.expect(pm.response.text()).to.include(\"Apolo\"); });"
+                  "pm.test(\"Cuerpo contiene: Apolo\", function(){ pm.expect(pm.response.text()).to.include(\"Apolo\"); });",
+                  "pm.test(\"Respuesta es un arreglo JSON\", function(){ pm.expect(pm.response.json()).to.be.an(\"array\"); });"
                 ]
               }
             }
@@ -544,8 +564,10 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
-                  "pm.test(\"Cuerpo contiene: Apolo\", function(){ pm.expect(pm.response.text()).to.include(\"Apolo\"); });"
+                  "pm.test(\"Cuerpo contiene: Apolo\", function(){ pm.expect(pm.response.text()).to.include(\"Apolo\"); });",
+                  "pm.test(\"Respuesta es un arreglo JSON\", function(){ pm.expect(pm.response.json()).to.be.an(\"array\"); });"
                 ]
               }
             }
@@ -579,8 +601,9 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
-                  "pm.test(\"Cuerpo contiene: \"idMascota\"\", function(){ pm.expect(pm.response.text()).to.include(\"\"idMascota\"\"); });",
+                  "pm.test(\"Cuerpo contiene: Luna\", function(){ pm.expect(pm.response.text()).to.include(\"Luna\"); });",
                   "var d=pm.response.json(); pm.collectionVariables.set(\"idMascota\", d.idMascota);"
                 ]
               }
@@ -623,6 +646,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
                   "pm.test(\"Cuerpo contiene: es obligatorio\", function(){ pm.expect(pm.response.text()).to.include(\"es obligatorio\"); });"
                 ]
@@ -666,6 +690,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
                   "pm.test(\"Cuerpo contiene: Hospitalizado\", function(){ pm.expect(pm.response.text()).to.include(\"Hospitalizado\"); });"
                 ]
@@ -709,6 +734,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
                   "pm.test(\"Cuerpo contiene: true\", function(){ pm.expect(pm.response.text()).to.include(\"true\"); });"
                 ]
@@ -738,6 +764,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
                   "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
                   "pm.test(\"Cuerpo contiene: false\", function(){ pm.expect(pm.response.text()).to.include(\"false\"); });"
                 ]
@@ -760,6 +787,19 @@
           }
         }
       ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "if (!pm.collectionVariables.get('usuarioNuevo')) {",
+          "  pm.collectionVariables.set('usuarioNuevo', 'manuel_' + Date.now().toString().slice(-6));",
+          "}"
+        ]
+      }
     }
   ]
 }
