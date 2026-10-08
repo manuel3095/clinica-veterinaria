@@ -148,3 +148,10 @@ Se amplió la API con servicios de consulta: `GET /mascotas/{id}`, `GET /mascota
 `fechaIngreso` y `correoPropietario`, y `POST /mascotas/{id}` retorna `false` si el id no existe.
 Documentación: `docs/API_DOCUMENTACION.md` y `docs/openapi.yaml`. Endpoints: `ENDPOINT.txt`.
 Colección Postman con 20 peticiones: `postman/Veterinaria_API.postman_collection.json`.
+
+## AA5-EV04 - Testing de la API con Postman
+- Colección: `postman/Veterinaria_API.postman_collection.json` (20 peticiones, 61 aserciones) y entorno `postman/Veterinaria_Local.postman_environment.json`.
+- La colección es repetible: el usuario de prueba se genera con sufijo aleatorio (`{{usuarioNuevo}}`).
+- Ejecución por línea de comandos con Newman (motor de Postman):
+  `newman run postman/Veterinaria_API.postman_collection.json -e postman/Veterinaria_Local.postman_environment.json`
+- Arrancar la API: `mvn spring-boot:run` (puerto 3000, definido en `server.port`).
