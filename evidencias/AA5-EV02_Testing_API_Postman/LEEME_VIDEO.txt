@@ -1,0 +1,2 @@
+Colocar aqui el video (MP4) o un enlace (Loom/YouTube) con el testing en Postman.
+Guion: ver Anexo del documento.

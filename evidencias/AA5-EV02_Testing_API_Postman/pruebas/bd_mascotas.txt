@@ -1,0 +1,3 @@
+id_mascota	nom_mascota	estado	especie	edad	raza	fecha_ingreso	correo_propietario
+1	Max	Estable	Canis lupus familiaris	3	Husky	2023-05-15	propietario@email.com
+2	Apolo	Hospitalizado	Canis lupus familiaris	2	San Bernardo	2022-01-10	duena@email.com

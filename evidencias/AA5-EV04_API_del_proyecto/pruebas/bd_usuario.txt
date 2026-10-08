@@ -1,0 +1,4 @@
+id_usuario	nombre_usuario	long_hash	hash_inicio
+1	recepcion1	64	86b4d07558aaafc1
+2	manuel_075660	64	f79b419a721ec0ad
+3	manuel_077750	64	f79b419a721ec0ad

@@ -1,4 +1,57 @@
-# Clínica Veterinaria - Módulo Mascotas (GA7-220501096-AA3-EV01)
+# Clínica Veterinaria - Sistema de gestión de mascotas
+
+Proyecto formativo del **Tecnólogo en Análisis y Desarrollo de Software (SENA)**, ficha GA7-220501096.
+Aprendiz: **Manuel Passo**.
+
+Aplicación web para una clínica veterinaria: gestión de mascotas (CRUD con validaciones), autenticación
+del personal (registro e inicio de sesión con contraseñas en hash SHA-256) y una API REST documentada y probada.
+
+**Tecnologías:** Java 17, Spring Boot 3.2.5, Spring Data JPA, MySQL/MariaDB, HTML/CSS/JavaScript, Maven, Git, Postman.
+
+## Estructura del repositorio
+
+```
+├── src/main/java/...      Código Java (model, repository, services, controller, auth, validacion, util)
+├── src/main/resources/    application.properties (puerto 3000) y front-end estático (static/)
+├── sql/                   Script de la base de datos y arneses de verificación
+├── docs/                  Documentación de la API (API_DOCUMENTACION.md y openapi.yaml)
+├── postman/               Colección y entorno de Postman
+├── ENDPOINT.txt           Lista de endpoints
+└── evidencias/            Documentos Word (APA 7) y pruebas de cada evidencia del proyecto formativo
+```
+
+## Evidencias del proyecto formativo
+
+Cada evidencia tiene su carpeta en [`evidencias/`](evidencias/) y una etiqueta (*tag*) de Git que marca el
+estado del código al terminar esa evidencia (`git checkout aa4-ev03`, por ejemplo).
+
+| Evidencia | Tema | Etiqueta Git |
+|---|---|---|
+| GA7-220501096-AA3-EV01 | Codificación de módulos (CRUD de mascotas) | `aa3-ev01` |
+| GA7-220501096-AA3-EV02 | Módulos codificados y probados (validaciones) | `aa3-ev02` |
+| GA7-220501096-AA4-EV03 | Componente front-end | `aa4-ev03` |
+| GA7-220501096-AA5-EV01 | Servicio web de registro e inicio de sesión | `aa5-ev01` |
+| GA7-220501096-AA5-EV02 | Testing de la API con Postman | `aa5-ev02` |
+| GA7-220501096-AA5-EV03 | Diseño y desarrollo de servicios web | `aa5-ev03` |
+| GA7-220501096-AA5-EV04 | API del proyecto: testing con Postman | `aa5-ev04` |
+
+## Inicio rápido
+
+1. Cargar la base de datos: `mysql -u root -p < sql/clinicaveterinaria.sql`
+2. Ajustar usuario y clave en `src/main/resources/application.properties`.
+3. Ejecutar: `mvn spring-boot:run` → API en `http://localhost:3000` (front-end en `/index.html` y `/auth.html`).
+4. Probar la API: importar `postman/Veterinaria_API.postman_collection.json` y `postman/Veterinaria_Local.postman_environment.json` en Postman.
+
+Documentación completa de los servicios: [`docs/API_DOCUMENTACION.md`](docs/API_DOCUMENTACION.md).
+
+> **Nota sobre las pruebas:** las pruebas de las evidencias AA5-EV02 a AA5-EV04 se ejecutaron contra un servidor
+> equivalente hecho solo con el JDK (`sql/ServidorPruebasAPI.java`) porque en el entorno de preparación no se
+> pudieron descargar las dependencias de Maven. La colección de Postman debe repetirse contra la aplicación
+> Spring Boot real (`mvn spring-boot:run`).
+
+---
+
+## Guía detallada del módulo Mascotas (AA3-EV01)
 
 Módulo de software desarrollado con **Spring Boot**, **Spring Data JPA**
 y **MySQL**, que implementa el CRUD (Create, Read, Update, Delete) de
@@ -58,7 +111,7 @@ cd veterinaria
 mvn spring-boot:run
 ```
 
-La aplicación queda disponible en `http://localhost:8080`.
+La aplicación queda disponible en `http://localhost:3000`.
 
 ### Alternativa en NetBeans
 
@@ -112,7 +165,7 @@ Usuario de ejemplo creado por el script SQL: `recepcion1` /
 
 Además de los endpoints, se incluye `auth.html` (formularios de
 registro e inicio de sesión) accesible en
-`http://localhost:8080/auth.html`.
+`http://localhost:3000/auth.html`.
 
 ### Pruebas de la lógica de autenticación (sin Maven ni base de datos)
 

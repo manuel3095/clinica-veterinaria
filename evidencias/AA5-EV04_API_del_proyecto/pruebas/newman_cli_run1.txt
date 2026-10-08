@@ -1,0 +1,146 @@
+newman
+
+Clinica Veterinaria - API REST (AA5-EV04)
+
+Folder Autenticacion (/auth)
+Sub-folder Registro valido
+  POST http://localhost:3000/auth/registro [200 OK, 149B, 196ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 200
+  Pass  Cuerpo contiene: Usuario registrado correctamente
+
+Sub-folder Registro - usuario duplicado
+  POST http://localhost:3000/auth/registro [400 Bad Request, 174B, 46ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 400
+  Pass  Cuerpo contiene: ya se encuentra registrado
+
+Sub-folder Registro - clave corta
+  POST http://localhost:3000/auth/registro [400 Bad Request, 173B, 50ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 400
+  Pass  Cuerpo contiene: al menos 8 caracteres
+
+Sub-folder Registro - usuario corto
+  POST http://localhost:3000/auth/registro [400 Bad Request, 180B, 49ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 400
+  Pass  Cuerpo contiene: al menos 3 caracteres
+
+Sub-folder Login correcto
+  POST http://localhost:3000/auth/login [200 OK, 144B, 50ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 200
+  Pass  Cuerpo contiene: Autenticacion satisfactoria
+
+Sub-folder Login - clave incorrecta
+  POST http://localhost:3000/auth/login [401 Unauthorized, 152B, 58ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 401
+  Pass  Cuerpo contiene: Error en la autenticacion
+
+Sub-folder Login - usuario inexistente
+  POST http://localhost:3000/auth/login [401 Unauthorized, 152B, 50ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 401
+  Pass  Cuerpo contiene: Error en la autenticacion
+
+Sub-folder Login - cuerpo vacio
+  POST http://localhost:3000/auth/login [401 Unauthorized, 152B, 45ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 401
+  Pass  Cuerpo contiene: Error en la autenticacion
+
+Sub-folder Login - metodo GET no permitido
+  GET http://localhost:3000/auth/login [405 Method Not Allowed, 151B, 45ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 405
+
+Sub-folder Listar usuarios (sin claves)
+  GET http://localhost:3000/auth/usuarios [200 OK, 217B, 48ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 200
+  Pass  Cuerpo contiene: nombreUsuario
+
+Folder Mascotas (/mascotas)
+Sub-folder Listar mascotas
+  GET http://localhost:3000/mascotas/mostrar [200 OK, 508B, 69ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 200
+  Pass  Cuerpo contiene: nomMascota
+  Pass  Respuesta es un arreglo JSON
+
+Sub-folder Consultar mascota por id
+  GET http://localhost:3000/mascotas/1 [200 OK, 310B, 51ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 200
+  Pass  Cuerpo contiene: Max
+
+Sub-folder Consultar mascota inexistente
+  GET http://localhost:3000/mascotas/999 [404 Not Found, 129B, 4ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 404
+
+Sub-folder Listar por estado
+  GET http://localhost:3000/mascotas/estado/Hospitalizado [200 OK, 321B, 48ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 200
+  Pass  Cuerpo contiene: Apolo
+  Pass  Respuesta es un arreglo JSON
+
+Sub-folder Listar por propietario
+  GET http://localhost:3000/mascotas/propietario?correo=duena@email.com [200 OK, 321B, 47ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 200
+  Pass  Cuerpo contiene: Apolo
+  Pass  Respuesta es un arreglo JSON
+
+Sub-folder Crear mascota valida
+  POST http://localhost:3000/mascotas/nuevo [200 OK, 300B, 90ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 200
+  Pass  Cuerpo contiene: Luna
+
+Sub-folder Crear mascota invalida
+  POST http://localhost:3000/mascotas/nuevo [400 Bad Request, 494B, 44ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 400
+  Pass  Cuerpo contiene: es obligatorio
+
+Sub-folder Modificar mascota
+  POST http://localhost:3000/mascotas/modificar [200 OK, 306B, 58ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 200
+  Pass  Cuerpo contiene: Hospitalizado
+
+Sub-folder Eliminar mascota
+  POST http://localhost:3000/mascotas/3 [200 OK, 126B, 49ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 200
+  Pass  Cuerpo contiene: true
+
+Sub-folder Eliminar mascota inexistente (false)
+  POST http://localhost:3000/mascotas/999999 [200 OK, 127B, 51ms]
+  Pass  Tiempo de respuesta menor a 2000 ms
+  Pass  Codigo HTTP 200
+  Pass  Cuerpo contiene: false
+
+------------------------------------------------------------------
+|                         |          executed |           failed |
+--------------------------+-------------------+-------------------
+|              iterations |                 1 |                0 |
+--------------------------+-------------------+-------------------
+|                requests |                20 |                0 |
+--------------------------+-------------------+-------------------
+|            test-scripts |                20 |                0 |
+--------------------------+-------------------+-------------------
+|      prerequest-scripts |                20 |                0 |
+--------------------------+-------------------+-------------------
+|              assertions |                61 |                0 |
+------------------------------------------------------------------
+| total run duration: 1519ms                                     |
+------------------------------------------------------------------
+| total data received: 2.09kB (approx)                           |
+------------------------------------------------------------------
+| average response time: 57ms [min: 4ms, max: 196ms, s.d.: 35ms] |
+------------------------------------------------------------------

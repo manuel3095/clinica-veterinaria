@@ -1,0 +1,6260 @@
+{
+  "collection": {
+    "item": [
+      {
+        "id": "6fd11324-2cc2-4d14-957c-1d602c73f56b",
+        "name": "Autenticacion (/auth)",
+        "item": [
+          {
+            "id": "fbfdfb93-e591-4e09-9b81-397203557ea3",
+            "name": "Registro valido",
+            "request": {
+              "url": {
+                "path": [
+                  "auth",
+                  "registro"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombreUsuario\": \"{{usuarioNuevo}}\",\n  \"clave\": \"Clave2024seg\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "3fc7e3e4-c61c-49ba-a718-31faaf0016ad",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                    "pm.test(\"Cuerpo contiene: Usuario registrado correctamente\", function(){ pm.expect(pm.response.text()).to.include(\"Usuario registrado correctamente\"); });"
+                  ],
+                  "_lastExecutionId": "df05ec74-9249-4b55-8ef7-5cf80c9c5213"
+                }
+              }
+            ]
+          },
+          {
+            "id": "6d0ecab2-c556-4714-809d-441eabef34fd",
+            "name": "Registro - usuario duplicado",
+            "request": {
+              "url": {
+                "path": [
+                  "auth",
+                  "registro"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombreUsuario\": \"{{usuarioNuevo}}\",\n  \"clave\": \"Clave2024seg\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "01894c49-813a-4c53-bb6e-17ae1554a133",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
+                    "pm.test(\"Cuerpo contiene: ya se encuentra registrado\", function(){ pm.expect(pm.response.text()).to.include(\"ya se encuentra registrado\"); });"
+                  ],
+                  "_lastExecutionId": "f7b387c0-fd98-4284-bb4d-33b6f4d29ae8"
+                }
+              }
+            ]
+          },
+          {
+            "id": "a1f9629d-ba33-4926-81b2-5b8c4a685898",
+            "name": "Registro - clave corta",
+            "request": {
+              "url": {
+                "path": [
+                  "auth",
+                  "registro"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombreUsuario\": \"usuario_nuevo\",\n  \"clave\": \"123\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "a32ff089-9ead-4937-a01a-3381b3ff5788",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
+                    "pm.test(\"Cuerpo contiene: al menos 8 caracteres\", function(){ pm.expect(pm.response.text()).to.include(\"al menos 8 caracteres\"); });"
+                  ],
+                  "_lastExecutionId": "2d5f7be7-76ae-4a06-9947-506fee7eaed2"
+                }
+              }
+            ]
+          },
+          {
+            "id": "7331e006-37f3-4c30-85f1-4f6eabff4643",
+            "name": "Registro - usuario corto",
+            "request": {
+              "url": {
+                "path": [
+                  "auth",
+                  "registro"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombreUsuario\": \"ab\",\n  \"clave\": \"Clave2024seg\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "3c18bf99-db68-4296-865b-a25c6e4236b8",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
+                    "pm.test(\"Cuerpo contiene: al menos 3 caracteres\", function(){ pm.expect(pm.response.text()).to.include(\"al menos 3 caracteres\"); });"
+                  ],
+                  "_lastExecutionId": "f2011927-d2e7-4739-a31b-9d22bdec78d2"
+                }
+              }
+            ]
+          },
+          {
+            "id": "698da43c-cd23-458b-8a68-0e3e09808198",
+            "name": "Login correcto",
+            "request": {
+              "url": {
+                "path": [
+                  "auth",
+                  "login"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombreUsuario\": \"{{usuarioNuevo}}\",\n  \"clave\": \"Clave2024seg\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "b6a6b015-6e60-4dc3-bb5f-e1d63043abe6",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                    "pm.test(\"Cuerpo contiene: Autenticacion satisfactoria\", function(){ pm.expect(pm.response.text()).to.include(\"Autenticacion satisfactoria\"); });"
+                  ],
+                  "_lastExecutionId": "3fcd922e-8b8c-4a35-8dc4-545d6fbb23fb"
+                }
+              }
+            ]
+          },
+          {
+            "id": "09efa77e-36b5-46f2-8e92-ee5b990eb345",
+            "name": "Login - clave incorrecta",
+            "request": {
+              "url": {
+                "path": [
+                  "auth",
+                  "login"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombreUsuario\": \"{{usuarioNuevo}}\",\n  \"clave\": \"otraClave999\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "ee435ed3-0397-4ce2-8d88-89902459cf30",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 401\", function(){ pm.response.to.have.status(401); });",
+                    "pm.test(\"Cuerpo contiene: Error en la autenticacion\", function(){ pm.expect(pm.response.text()).to.include(\"Error en la autenticacion\"); });"
+                  ],
+                  "_lastExecutionId": "1b829b92-1ce9-4cb4-a53b-b59e4534b714"
+                }
+              }
+            ]
+          },
+          {
+            "id": "feaf2530-0c9c-460a-81c8-78a9fad4b77c",
+            "name": "Login - usuario inexistente",
+            "request": {
+              "url": {
+                "path": [
+                  "auth",
+                  "login"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombreUsuario\": \"fantasma\",\n  \"clave\": \"Clave2024seg\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "f4648619-1cf3-4b6f-8e72-ddf3fb35b6d8",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 401\", function(){ pm.response.to.have.status(401); });",
+                    "pm.test(\"Cuerpo contiene: Error en la autenticacion\", function(){ pm.expect(pm.response.text()).to.include(\"Error en la autenticacion\"); });"
+                  ],
+                  "_lastExecutionId": "c0ff5d0e-09f3-49b2-a29f-f4e29b18ff14"
+                }
+              }
+            ]
+          },
+          {
+            "id": "1e9d999f-d7ca-43e5-bb5e-ef4efff2fa01",
+            "name": "Login - cuerpo vacio",
+            "request": {
+              "url": {
+                "path": [
+                  "auth",
+                  "login"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "225dcd4f-50ed-4ed9-8498-5890901d9f38",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 401\", function(){ pm.response.to.have.status(401); });",
+                    "pm.test(\"Cuerpo contiene: Error en la autenticacion\", function(){ pm.expect(pm.response.text()).to.include(\"Error en la autenticacion\"); });"
+                  ],
+                  "_lastExecutionId": "5b264466-a80c-4b53-a702-bd36115d2685"
+                }
+              }
+            ]
+          },
+          {
+            "id": "660d7a39-b14c-487f-87e0-2a3dd24b87c5",
+            "name": "Login - metodo GET no permitido",
+            "request": {
+              "url": {
+                "path": [
+                  "auth",
+                  "login"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "GET"
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "16384370-2568-440f-83e2-46d6a8e9e90e",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 405\", function(){ pm.response.to.have.status(405); });"
+                  ],
+                  "_lastExecutionId": "45cd7dd2-4b85-47ba-8b5f-7b8d46db1506"
+                }
+              }
+            ]
+          },
+          {
+            "id": "f51a0131-339f-4530-8011-81bfca0df822",
+            "name": "Listar usuarios (sin claves)",
+            "request": {
+              "url": {
+                "path": [
+                  "auth",
+                  "usuarios"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "GET"
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "bfa3abd8-905f-4eec-bb18-9e09ac0694f0",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                    "pm.test(\"Cuerpo contiene: nombreUsuario\", function(){ pm.expect(pm.response.text()).to.include(\"nombreUsuario\"); });"
+                  ],
+                  "_lastExecutionId": "20c58ba5-2e22-4c9b-abc0-b55da1aee1fe"
+                }
+              }
+            ]
+          }
+        ],
+        "event": []
+      },
+      {
+        "id": "a902fa83-7890-4c6f-979b-eed12252b2aa",
+        "name": "Mascotas (/mascotas)",
+        "item": [
+          {
+            "id": "2b395134-c49e-4f2f-8e49-0e7f3453c1a3",
+            "name": "Listar mascotas",
+            "request": {
+              "url": {
+                "path": [
+                  "mascotas",
+                  "mostrar"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "GET"
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "c0adb819-de1d-44f4-8792-475e481149e8",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                    "pm.test(\"Cuerpo contiene: nomMascota\", function(){ pm.expect(pm.response.text()).to.include(\"nomMascota\"); });",
+                    "pm.test(\"Respuesta es un arreglo JSON\", function(){ pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                  ],
+                  "_lastExecutionId": "8d753410-6b6a-4d7f-94d6-a8c54568fff8"
+                }
+              }
+            ]
+          },
+          {
+            "id": "99eea8aa-4751-4f46-b9cf-105c64eaa569",
+            "name": "Consultar mascota por id",
+            "request": {
+              "url": {
+                "path": [
+                  "mascotas",
+                  "1"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "GET"
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "7efe22b3-0795-4d50-8cbe-c7c30d32873a",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                    "pm.test(\"Cuerpo contiene: Max\", function(){ pm.expect(pm.response.text()).to.include(\"Max\"); });"
+                  ],
+                  "_lastExecutionId": "3bce340b-b4a8-40da-8903-342303f51ae6"
+                }
+              }
+            ]
+          },
+          {
+            "id": "0a299362-f938-4921-b009-5a223770aa6e",
+            "name": "Consultar mascota inexistente",
+            "request": {
+              "url": {
+                "path": [
+                  "mascotas",
+                  "999"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "GET"
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "f45ba66e-66f4-41e3-a59a-35e15a2df83b",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 404\", function(){ pm.response.to.have.status(404); });"
+                  ],
+                  "_lastExecutionId": "c62aae14-f413-484f-b563-934b6177b96d"
+                }
+              }
+            ]
+          },
+          {
+            "id": "97fcaed8-64ff-4f32-a580-fa2e94cd2621",
+            "name": "Listar por estado",
+            "request": {
+              "url": {
+                "path": [
+                  "mascotas",
+                  "estado",
+                  "Hospitalizado"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "GET"
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "93504b72-e9a6-481c-8ffe-210af2096199",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                    "pm.test(\"Cuerpo contiene: Apolo\", function(){ pm.expect(pm.response.text()).to.include(\"Apolo\"); });",
+                    "pm.test(\"Respuesta es un arreglo JSON\", function(){ pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                  ],
+                  "_lastExecutionId": "628762f3-3dba-41f5-ae39-77a59d140d7e"
+                }
+              }
+            ]
+          },
+          {
+            "id": "d9166025-ad28-4154-a9d9-1d35c7b60a1c",
+            "name": "Listar por propietario",
+            "request": {
+              "url": {
+                "path": [
+                  "mascotas",
+                  "propietario"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [
+                  {
+                    "key": "correo",
+                    "value": "duena@email.com"
+                  }
+                ],
+                "variable": []
+              },
+              "method": "GET"
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "663a6139-451b-43dc-8cda-5995841d1241",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                    "pm.test(\"Cuerpo contiene: Apolo\", function(){ pm.expect(pm.response.text()).to.include(\"Apolo\"); });",
+                    "pm.test(\"Respuesta es un arreglo JSON\", function(){ pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                  ],
+                  "_lastExecutionId": "3c58772d-7fd7-484f-94fe-27a4c4706072"
+                }
+              }
+            ]
+          },
+          {
+            "id": "f8c84e23-d025-4274-95c5-76f09b56d3bd",
+            "name": "Crear mascota valida",
+            "request": {
+              "url": {
+                "path": [
+                  "mascotas",
+                  "nuevo"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nomMascota\": \"Luna\",\n  \"estado\": \"Estable\",\n  \"especie\": \"Felis catus\",\n  \"edad\": \"4\",\n  \"raza\": \"Siames\",\n  \"fechaIngreso\": \"2024-03-12\",\n  \"correoPropietario\": \"luna.duena@email.com\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "53af5abf-4b49-489e-95fd-043ebc03498d",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                    "pm.test(\"Cuerpo contiene: Luna\", function(){ pm.expect(pm.response.text()).to.include(\"Luna\"); });",
+                    "var d=pm.response.json(); pm.collectionVariables.set(\"idMascota\", d.idMascota);"
+                  ],
+                  "_lastExecutionId": "a6b33ac0-1cdf-4897-b3d9-678f976e6d45"
+                }
+              }
+            ]
+          },
+          {
+            "id": "a680bdaf-386b-4377-980b-45c1c5ab5602",
+            "name": "Crear mascota invalida",
+            "request": {
+              "url": {
+                "path": [
+                  "mascotas",
+                  "nuevo"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nomMascota\": \"\",\n  \"estado\": \"Volando\",\n  \"especie\": \"Felis catus\",\n  \"edad\": \"abc\",\n  \"raza\": \"Siames\",\n  \"fechaIngreso\": \"2099-01-01\",\n  \"correoPropietario\": \"correo-malo\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "aed149ee-a25d-41c7-8f10-eb2394ebbf1e",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
+                    "pm.test(\"Cuerpo contiene: es obligatorio\", function(){ pm.expect(pm.response.text()).to.include(\"es obligatorio\"); });"
+                  ],
+                  "_lastExecutionId": "577bd295-4685-4341-95aa-420945a738e0"
+                }
+              }
+            ]
+          },
+          {
+            "id": "958e5433-f4ef-4844-a773-c76bb29fa979",
+            "name": "Modificar mascota",
+            "request": {
+              "url": {
+                "path": [
+                  "mascotas",
+                  "modificar"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"idMascota\": {{idMascota}},\n  \"nomMascota\": \"Luna\",\n  \"estado\": \"Hospitalizado\",\n  \"especie\": \"Felis catus\",\n  \"edad\": \"4\",\n  \"raza\": \"Siames\",\n  \"fechaIngreso\": \"2024-03-12\",\n  \"correoPropietario\": \"luna.duena@email.com\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "7bdf9124-34f7-4765-ac28-565c5bf5f064",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                    "pm.test(\"Cuerpo contiene: Hospitalizado\", function(){ pm.expect(pm.response.text()).to.include(\"Hospitalizado\"); });"
+                  ],
+                  "_lastExecutionId": "c9787223-8c7c-4cc8-bb18-6d0c731d3d60"
+                }
+              }
+            ]
+          },
+          {
+            "id": "5f7875a7-bfed-452a-ae3b-240d2c703ab8",
+            "name": "Eliminar mascota",
+            "request": {
+              "url": {
+                "path": [
+                  "mascotas",
+                  "{{idMascota}}"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "POST"
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "77e7bec9-7dba-49fd-a4dd-f55a4aedec61",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                    "pm.test(\"Cuerpo contiene: true\", function(){ pm.expect(pm.response.text()).to.include(\"true\"); });"
+                  ],
+                  "_lastExecutionId": "d0e88dc3-499d-491e-a20f-68c83fe3af9a"
+                }
+              }
+            ]
+          },
+          {
+            "id": "97be6414-d24f-4fcc-a912-3361fde4fdb9",
+            "name": "Eliminar mascota inexistente (false)",
+            "request": {
+              "url": {
+                "path": [
+                  "mascotas",
+                  "999999"
+                ],
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "POST"
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "0eb62c11-02f5-49e9-a5c4-a2032621933f",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                    "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                    "pm.test(\"Cuerpo contiene: false\", function(){ pm.expect(pm.response.text()).to.include(\"false\"); });"
+                  ],
+                  "_lastExecutionId": "53101d18-5840-4851-aab4-fc61e7b03ab4"
+                }
+              }
+            ]
+          }
+        ],
+        "event": []
+      }
+    ],
+    "event": [
+      {
+        "listen": "prerequest",
+        "script": {
+          "id": "e9b63933-a987-4dfe-9b1d-819ee06185b6",
+          "type": "text/javascript",
+          "exec": [
+            "if (!pm.collectionVariables.get('usuarioNuevo')) {",
+            "  pm.collectionVariables.set('usuarioNuevo', 'manuel_' + Date.now().toString().slice(-6));",
+            "}"
+          ],
+          "_lastExecutionId": "ab419c4e-7280-497f-8907-85e88610f1b4"
+        }
+      }
+    ],
+    "variable": [
+      {
+        "type": "any",
+        "value": "http://localhost:3000",
+        "key": "baseUrl"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "usuarioNuevo"
+      }
+    ],
+    "info": {
+      "_postman_id": "fa3c3b22-592c-4cd5-87a1-2b233c8f6c4c",
+      "name": "Clinica Veterinaria - API REST (AA5-EV04)",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "description": {
+        "content": "Coleccion de pruebas de la API de la Clinica Veterinaria (AA5-EV04). Aprendiz: Manuel Passo. Ejecutar con el entorno Veterinaria_Local (baseUrl = http://localhost:3000). La coleccion es repetible: el usuario de prueba se genera con un sufijo aleatorio.",
+        "type": "text/plain"
+      }
+    }
+  },
+  "environment": {
+    "_": {
+      "postman_variable_scope": "environment"
+    },
+    "id": "veterinaria-local",
+    "name": "Veterinaria_Local",
+    "values": [
+      {
+        "type": "any",
+        "value": "http://localhost:3000",
+        "key": "baseUrl"
+      }
+    ]
+  },
+  "globals": {
+    "id": "e578fb45-10f9-40f6-b080-398d19af34c5",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 20,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 40,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 20,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 20,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 20,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 61,
+        "pending": 0,
+        "failed": 0
+      },
+      "testScripts": {
+        "total": 20,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 20,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 57.4,
+      "responseMin": 4,
+      "responseMax": 196,
+      "responseSd": 35.03483980268783,
+      "dnsAverage": 0,
+      "dnsMin": 0,
+      "dnsMax": 0,
+      "dnsSd": 0,
+      "firstByteAverage": 0,
+      "firstByteMin": 0,
+      "firstByteMax": 0,
+      "firstByteSd": 0,
+      "started": 1791432075643,
+      "completed": 1791432077162
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 20,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "b9ed0c7f-3eb8-4419-abaf-9c01b6c2a77b",
+          "httpRequestId": "96bb323d-7c9c-4ec2-8496-43c4c7a37a78"
+        },
+        "item": {
+          "id": "fbfdfb93-e591-4e09-9b81-397203557ea3",
+          "name": "Registro valido",
+          "request": {
+            "url": {
+              "path": [
+                "auth",
+                "registro"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"{{usuarioNuevo}}\",\n  \"clave\": \"Clave2024seg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3fc7e3e4-c61c-49ba-a718-31faaf0016ad",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: Usuario registrado correctamente\", function(){ pm.expect(pm.response.text()).to.include(\"Usuario registrado correctamente\"); });"
+                ],
+                "_lastExecutionId": "df05ec74-9249-4b55-8ef7-5cf80c9c5213"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "auth",
+              "registro"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "375601df-db65-4b6c-a335-7d082209a8bd",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "65",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"nombreUsuario\": \"manuel_075660\",\n  \"clave\": \"Clave2024seg\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "a46212a9-1f40-4b49-80e0-5e8259a8ca7b",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:15 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "text/plain; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "32"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              85,
+              115,
+              117,
+              97,
+              114,
+              105,
+              111,
+              32,
+              114,
+              101,
+              103,
+              105,
+              115,
+              116,
+              114,
+              97,
+              100,
+              111,
+              32,
+              99,
+              111,
+              114,
+              114,
+              101,
+              99,
+              116,
+              97,
+              109,
+              101,
+              110,
+              116,
+              101
+            ]
+          },
+          "cookie": [],
+          "responseTime": 196,
+          "responseSize": 32
+        },
+        "id": "fbfdfb93-e591-4e09-9b81-397203557ea3",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: Usuario registrado correctamente",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "4026441a-9650-47e1-b9e6-16e08acdcf16",
+          "length": 20,
+          "cycles": 1,
+          "position": 1,
+          "iteration": 0,
+          "httpRequestId": "579634e6-8f66-4a44-a7e1-8fb46fcf851c"
+        },
+        "item": {
+          "id": "6d0ecab2-c556-4714-809d-441eabef34fd",
+          "name": "Registro - usuario duplicado",
+          "request": {
+            "url": {
+              "path": [
+                "auth",
+                "registro"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"{{usuarioNuevo}}\",\n  \"clave\": \"Clave2024seg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "01894c49-813a-4c53-bb6e-17ae1554a133",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
+                  "pm.test(\"Cuerpo contiene: ya se encuentra registrado\", function(){ pm.expect(pm.response.text()).to.include(\"ya se encuentra registrado\"); });"
+                ],
+                "_lastExecutionId": "f7b387c0-fd98-4284-bb4d-33b6f4d29ae8"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "auth",
+              "registro"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "f997f437-6771-4783-b79c-c8ad440d20b2",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "65",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"nombreUsuario\": \"manuel_075660\",\n  \"clave\": \"Clave2024seg\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "57d61bf2-3196-4836-968c-18fb274220ea",
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:15 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "text/plain; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "48"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              69,
+              108,
+              32,
+              110,
+              111,
+              109,
+              98,
+              114,
+              101,
+              32,
+              100,
+              101,
+              32,
+              117,
+              115,
+              117,
+              97,
+              114,
+              105,
+              111,
+              32,
+              121,
+              97,
+              32,
+              115,
+              101,
+              32,
+              101,
+              110,
+              99,
+              117,
+              101,
+              110,
+              116,
+              114,
+              97,
+              32,
+              114,
+              101,
+              103,
+              105,
+              115,
+              116,
+              114,
+              97,
+              100,
+              111,
+              46
+            ]
+          },
+          "cookie": [],
+          "responseTime": 46,
+          "responseSize": 48
+        },
+        "id": "6d0ecab2-c556-4714-809d-441eabef34fd",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 400",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: ya se encuentra registrado",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "2e4b6e09-2d66-4eb3-8cfc-0ddbfc3cd56b",
+          "length": 20,
+          "cycles": 1,
+          "position": 2,
+          "iteration": 0,
+          "httpRequestId": "14681025-8c7a-4583-99f5-0168497a11c8"
+        },
+        "item": {
+          "id": "a1f9629d-ba33-4926-81b2-5b8c4a685898",
+          "name": "Registro - clave corta",
+          "request": {
+            "url": {
+              "path": [
+                "auth",
+                "registro"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"usuario_nuevo\",\n  \"clave\": \"123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "a32ff089-9ead-4937-a01a-3381b3ff5788",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
+                  "pm.test(\"Cuerpo contiene: al menos 8 caracteres\", function(){ pm.expect(pm.response.text()).to.include(\"al menos 8 caracteres\"); });"
+                ],
+                "_lastExecutionId": "2d5f7be7-76ae-4a06-9947-506fee7eaed2"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "auth",
+              "registro"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "5487871b-2b77-4de5-bf69-d5b2657fd765",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "56",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"nombreUsuario\": \"usuario_nuevo\",\n  \"clave\": \"123\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "650d5591-123f-42a6-a4d0-7a059708d0b3",
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:15 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "text/plain; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "47"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              76,
+              97,
+              32,
+              99,
+              111,
+              110,
+              116,
+              114,
+              97,
+              115,
+              101,
+              110,
+              97,
+              32,
+              100,
+              101,
+              98,
+              101,
+              32,
+              116,
+              101,
+              110,
+              101,
+              114,
+              32,
+              97,
+              108,
+              32,
+              109,
+              101,
+              110,
+              111,
+              115,
+              32,
+              56,
+              32,
+              99,
+              97,
+              114,
+              97,
+              99,
+              116,
+              101,
+              114,
+              101,
+              115,
+              46
+            ]
+          },
+          "cookie": [],
+          "responseTime": 50,
+          "responseSize": 47
+        },
+        "id": "a1f9629d-ba33-4926-81b2-5b8c4a685898",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 400",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: al menos 8 caracteres",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "d35958bd-f4f7-4f5d-8aaa-0e84cc0ae56b",
+          "length": 20,
+          "cycles": 1,
+          "position": 3,
+          "iteration": 0,
+          "httpRequestId": "c27d2ae2-3963-4ec5-a5a9-f33254481038"
+        },
+        "item": {
+          "id": "7331e006-37f3-4c30-85f1-4f6eabff4643",
+          "name": "Registro - usuario corto",
+          "request": {
+            "url": {
+              "path": [
+                "auth",
+                "registro"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"ab\",\n  \"clave\": \"Clave2024seg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3c18bf99-db68-4296-865b-a25c6e4236b8",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
+                  "pm.test(\"Cuerpo contiene: al menos 3 caracteres\", function(){ pm.expect(pm.response.text()).to.include(\"al menos 3 caracteres\"); });"
+                ],
+                "_lastExecutionId": "f2011927-d2e7-4739-a31b-9d22bdec78d2"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "auth",
+              "registro"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "824c89a4-529f-4acb-bbcf-e4e4238c9215",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "54",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"nombreUsuario\": \"ab\",\n  \"clave\": \"Clave2024seg\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "eddfa7c0-47bc-4d54-847b-9b391eb5b791",
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "text/plain; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "54"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              69,
+              108,
+              32,
+              110,
+              111,
+              109,
+              98,
+              114,
+              101,
+              32,
+              100,
+              101,
+              32,
+              117,
+              115,
+              117,
+              97,
+              114,
+              105,
+              111,
+              32,
+              100,
+              101,
+              98,
+              101,
+              32,
+              116,
+              101,
+              110,
+              101,
+              114,
+              32,
+              97,
+              108,
+              32,
+              109,
+              101,
+              110,
+              111,
+              115,
+              32,
+              51,
+              32,
+              99,
+              97,
+              114,
+              97,
+              99,
+              116,
+              101,
+              114,
+              101,
+              115,
+              46
+            ]
+          },
+          "cookie": [],
+          "responseTime": 49,
+          "responseSize": 54
+        },
+        "id": "7331e006-37f3-4c30-85f1-4f6eabff4643",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 400",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: al menos 3 caracteres",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "edf3d264-e9a3-4137-b5c6-0ebb072c3dc5",
+          "length": 20,
+          "cycles": 1,
+          "position": 4,
+          "iteration": 0,
+          "httpRequestId": "b6bdd0d2-ae7d-43a5-9883-a6acb0764d40"
+        },
+        "item": {
+          "id": "698da43c-cd23-458b-8a68-0e3e09808198",
+          "name": "Login correcto",
+          "request": {
+            "url": {
+              "path": [
+                "auth",
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"{{usuarioNuevo}}\",\n  \"clave\": \"Clave2024seg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "b6a6b015-6e60-4dc3-bb5f-e1d63043abe6",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: Autenticacion satisfactoria\", function(){ pm.expect(pm.response.text()).to.include(\"Autenticacion satisfactoria\"); });"
+                ],
+                "_lastExecutionId": "3fcd922e-8b8c-4a35-8dc4-545d6fbb23fb"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "auth",
+              "login"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "b9238784-6bf0-46db-ab05-883591204750",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "65",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"nombreUsuario\": \"manuel_075660\",\n  \"clave\": \"Clave2024seg\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "557c29d5-8988-4ad6-ad9b-be38a030dce0",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "text/plain; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "27"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              65,
+              117,
+              116,
+              101,
+              110,
+              116,
+              105,
+              99,
+              97,
+              99,
+              105,
+              111,
+              110,
+              32,
+              115,
+              97,
+              116,
+              105,
+              115,
+              102,
+              97,
+              99,
+              116,
+              111,
+              114,
+              105,
+              97
+            ]
+          },
+          "cookie": [],
+          "responseTime": 50,
+          "responseSize": 27
+        },
+        "id": "698da43c-cd23-458b-8a68-0e3e09808198",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: Autenticacion satisfactoria",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "1a284420-79de-4b86-9a15-5b09e82d72a1",
+          "length": 20,
+          "cycles": 1,
+          "position": 5,
+          "iteration": 0,
+          "httpRequestId": "2b308d32-02c5-4a94-80c0-0e903bd68235"
+        },
+        "item": {
+          "id": "09efa77e-36b5-46f2-8e92-ee5b990eb345",
+          "name": "Login - clave incorrecta",
+          "request": {
+            "url": {
+              "path": [
+                "auth",
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"{{usuarioNuevo}}\",\n  \"clave\": \"otraClave999\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "ee435ed3-0397-4ce2-8d88-89902459cf30",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 401\", function(){ pm.response.to.have.status(401); });",
+                  "pm.test(\"Cuerpo contiene: Error en la autenticacion\", function(){ pm.expect(pm.response.text()).to.include(\"Error en la autenticacion\"); });"
+                ],
+                "_lastExecutionId": "1b829b92-1ce9-4cb4-a53b-b59e4534b714"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "auth",
+              "login"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "a2f2aa72-e867-42f9-9958-b93a3fafa353",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "65",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"nombreUsuario\": \"manuel_075660\",\n  \"clave\": \"otraClave999\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "fbd41f36-22fe-4d8e-b071-f4524c350260",
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "text/plain; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "25"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              69,
+              114,
+              114,
+              111,
+              114,
+              32,
+              101,
+              110,
+              32,
+              108,
+              97,
+              32,
+              97,
+              117,
+              116,
+              101,
+              110,
+              116,
+              105,
+              99,
+              97,
+              99,
+              105,
+              111,
+              110
+            ]
+          },
+          "cookie": [],
+          "responseTime": 58,
+          "responseSize": 25
+        },
+        "id": "09efa77e-36b5-46f2-8e92-ee5b990eb345",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 401",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: Error en la autenticacion",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "ab6e9e13-2f1d-489e-9007-312c9b6a2b53",
+          "length": 20,
+          "cycles": 1,
+          "position": 6,
+          "iteration": 0,
+          "httpRequestId": "677c1fb9-4af1-4441-8e56-00bedcb8385e"
+        },
+        "item": {
+          "id": "feaf2530-0c9c-460a-81c8-78a9fad4b77c",
+          "name": "Login - usuario inexistente",
+          "request": {
+            "url": {
+              "path": [
+                "auth",
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"fantasma\",\n  \"clave\": \"Clave2024seg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "f4648619-1cf3-4b6f-8e72-ddf3fb35b6d8",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 401\", function(){ pm.response.to.have.status(401); });",
+                  "pm.test(\"Cuerpo contiene: Error en la autenticacion\", function(){ pm.expect(pm.response.text()).to.include(\"Error en la autenticacion\"); });"
+                ],
+                "_lastExecutionId": "c0ff5d0e-09f3-49b2-a29f-f4e29b18ff14"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "auth",
+              "login"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "3589a8a9-bd27-4afc-b028-f4ff164bc39f",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "60",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"nombreUsuario\": \"fantasma\",\n  \"clave\": \"Clave2024seg\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "98809099-d857-41cc-a83e-acd50953f9f6",
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "text/plain; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "25"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              69,
+              114,
+              114,
+              111,
+              114,
+              32,
+              101,
+              110,
+              32,
+              108,
+              97,
+              32,
+              97,
+              117,
+              116,
+              101,
+              110,
+              116,
+              105,
+              99,
+              97,
+              99,
+              105,
+              111,
+              110
+            ]
+          },
+          "cookie": [],
+          "responseTime": 50,
+          "responseSize": 25
+        },
+        "id": "feaf2530-0c9c-460a-81c8-78a9fad4b77c",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 401",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: Error en la autenticacion",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "28050752-a880-42e1-9c40-63cc09e4e9b8",
+          "length": 20,
+          "cycles": 1,
+          "position": 7,
+          "iteration": 0,
+          "httpRequestId": "5909ab16-2a9a-4d75-b654-35e4658be052"
+        },
+        "item": {
+          "id": "1e9d999f-d7ca-43e5-bb5e-ef4efff2fa01",
+          "name": "Login - cuerpo vacio",
+          "request": {
+            "url": {
+              "path": [
+                "auth",
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "225dcd4f-50ed-4ed9-8498-5890901d9f38",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 401\", function(){ pm.response.to.have.status(401); });",
+                  "pm.test(\"Cuerpo contiene: Error en la autenticacion\", function(){ pm.expect(pm.response.text()).to.include(\"Error en la autenticacion\"); });"
+                ],
+                "_lastExecutionId": "5b264466-a80c-4b53-a702-bd36115d2685"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "auth",
+              "login"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "bae94b7b-5b5f-42f2-9fb1-ab00dcb8db57",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "2",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "721eff96-5718-47ef-9045-bfb73ebd04e9",
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "text/plain; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "25"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              69,
+              114,
+              114,
+              111,
+              114,
+              32,
+              101,
+              110,
+              32,
+              108,
+              97,
+              32,
+              97,
+              117,
+              116,
+              101,
+              110,
+              116,
+              105,
+              99,
+              97,
+              99,
+              105,
+              111,
+              110
+            ]
+          },
+          "cookie": [],
+          "responseTime": 45,
+          "responseSize": 25
+        },
+        "id": "1e9d999f-d7ca-43e5-bb5e-ef4efff2fa01",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 401",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: Error en la autenticacion",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "5715081b-6bc3-4698-8574-fe64d1cb1dda",
+          "length": 20,
+          "cycles": 1,
+          "position": 8,
+          "iteration": 0,
+          "httpRequestId": "959b42aa-78d2-45b2-b0ea-8abe1b641bee"
+        },
+        "item": {
+          "id": "660d7a39-b14c-487f-87e0-2a3dd24b87c5",
+          "name": "Login - metodo GET no permitido",
+          "request": {
+            "url": {
+              "path": [
+                "auth",
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "16384370-2568-440f-83e2-46d6a8e9e90e",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 405\", function(){ pm.response.to.have.status(405); });"
+                ],
+                "_lastExecutionId": "45cd7dd2-4b85-47ba-8b5f-7b8d46db1506"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "auth",
+              "login"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "620c4dc0-c21e-4d97-adbc-376f61a6de91",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "343cb093-333f-41ef-bf45-c100bd9c2063",
+          "status": "Method Not Allowed",
+          "code": 405,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "text/plain; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "18"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              77,
+              101,
+              116,
+              104,
+              111,
+              100,
+              32,
+              78,
+              111,
+              116,
+              32,
+              65,
+              108,
+              108,
+              111,
+              119,
+              101,
+              100
+            ]
+          },
+          "cookie": [],
+          "responseTime": 45,
+          "responseSize": 18
+        },
+        "id": "660d7a39-b14c-487f-87e0-2a3dd24b87c5",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 405",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "9e024277-2b23-4b21-b41a-2bd441b0cc25",
+          "length": 20,
+          "cycles": 1,
+          "position": 9,
+          "iteration": 0,
+          "httpRequestId": "100d369e-b6fe-432a-b0eb-51e3e45e7633"
+        },
+        "item": {
+          "id": "f51a0131-339f-4530-8011-81bfca0df822",
+          "name": "Listar usuarios (sin claves)",
+          "request": {
+            "url": {
+              "path": [
+                "auth",
+                "usuarios"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "bfa3abd8-905f-4eec-bb18-9e09ac0694f0",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: nombreUsuario\", function(){ pm.expect(pm.response.text()).to.include(\"nombreUsuario\"); });"
+                ],
+                "_lastExecutionId": "20c58ba5-2e22-4c9b-abc0-b55da1aee1fe"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "auth",
+              "usuarios"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "e9c9b6f7-0e3a-4170-8395-2b620fb312e5",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "19f00bb8-a6f9-431b-8d64-fdac47209e1e",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "application/json; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "94"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              91,
+              123,
+              34,
+              105,
+              100,
+              85,
+              115,
+              117,
+              97,
+              114,
+              105,
+              111,
+              34,
+              58,
+              49,
+              44,
+              34,
+              110,
+              111,
+              109,
+              98,
+              114,
+              101,
+              85,
+              115,
+              117,
+              97,
+              114,
+              105,
+              111,
+              34,
+              58,
+              34,
+              114,
+              101,
+              99,
+              101,
+              112,
+              99,
+              105,
+              111,
+              110,
+              49,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              85,
+              115,
+              117,
+              97,
+              114,
+              105,
+              111,
+              34,
+              58,
+              50,
+              44,
+              34,
+              110,
+              111,
+              109,
+              98,
+              114,
+              101,
+              85,
+              115,
+              117,
+              97,
+              114,
+              105,
+              111,
+              34,
+              58,
+              34,
+              109,
+              97,
+              110,
+              117,
+              101,
+              108,
+              95,
+              48,
+              55,
+              53,
+              54,
+              54,
+              48,
+              34,
+              125,
+              93
+            ]
+          },
+          "cookie": [],
+          "responseTime": 48,
+          "responseSize": 94
+        },
+        "id": "f51a0131-339f-4530-8011-81bfca0df822",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: nombreUsuario",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "fe74cad2-241f-4e3d-9b9f-581e1a2ee250",
+          "length": 20,
+          "cycles": 1,
+          "position": 10,
+          "iteration": 0,
+          "httpRequestId": "acdffd83-1212-4c35-a9f6-7593784b06bd"
+        },
+        "item": {
+          "id": "2b395134-c49e-4f2f-8e49-0e7f3453c1a3",
+          "name": "Listar mascotas",
+          "request": {
+            "url": {
+              "path": [
+                "mascotas",
+                "mostrar"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "c0adb819-de1d-44f4-8792-475e481149e8",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: nomMascota\", function(){ pm.expect(pm.response.text()).to.include(\"nomMascota\"); });",
+                  "pm.test(\"Respuesta es un arreglo JSON\", function(){ pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                ],
+                "_lastExecutionId": "8d753410-6b6a-4d7f-94d6-a8c54568fff8"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "mascotas",
+              "mostrar"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "b3ae12f9-bf60-456c-ab51-2cf642e80faf",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "0f95fbaa-48ca-4af4-b1f3-bc416dca496d",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "application/json; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "384"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              91,
+              123,
+              34,
+              105,
+              100,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              49,
+              44,
+              34,
+              110,
+              111,
+              109,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              34,
+              77,
+              97,
+              120,
+              34,
+              44,
+              34,
+              101,
+              115,
+              116,
+              97,
+              100,
+              111,
+              34,
+              58,
+              34,
+              69,
+              115,
+              116,
+              97,
+              98,
+              108,
+              101,
+              34,
+              44,
+              34,
+              101,
+              115,
+              112,
+              101,
+              99,
+              105,
+              101,
+              34,
+              58,
+              34,
+              67,
+              97,
+              110,
+              105,
+              115,
+              32,
+              108,
+              117,
+              112,
+              117,
+              115,
+              32,
+              102,
+              97,
+              109,
+              105,
+              108,
+              105,
+              97,
+              114,
+              105,
+              115,
+              34,
+              44,
+              34,
+              101,
+              100,
+              97,
+              100,
+              34,
+              58,
+              34,
+              51,
+              34,
+              44,
+              34,
+              114,
+              97,
+              122,
+              97,
+              34,
+              58,
+              34,
+              72,
+              117,
+              115,
+              107,
+              121,
+              34,
+              44,
+              34,
+              102,
+              101,
+              99,
+              104,
+              97,
+              73,
+              110,
+              103,
+              114,
+              101,
+              115,
+              111,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              51,
+              45,
+              48,
+              53,
+              45,
+              49,
+              53,
+              34,
+              44,
+              34,
+              99,
+              111,
+              114,
+              114,
+              101,
+              111,
+              80,
+              114,
+              111,
+              112,
+              105,
+              101,
+              116,
+              97,
+              114,
+              105,
+              111,
+              34,
+              58,
+              34,
+              112,
+              114,
+              111,
+              112,
+              105,
+              101,
+              116,
+              97,
+              114,
+              105,
+              111,
+              64,
+              101,
+              109,
+              97,
+              105,
+              108,
+              46,
+              99,
+              111,
+              109,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              50,
+              44,
+              34,
+              110,
+              111,
+              109,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              34,
+              65,
+              112,
+              111,
+              108,
+              111,
+              34,
+              44,
+              34,
+              101,
+              115,
+              116,
+              97,
+              100,
+              111,
+              34,
+              58,
+              34,
+              72,
+              111,
+              115,
+              112,
+              105,
+              116,
+              97,
+              108,
+              105,
+              122,
+              97,
+              100,
+              111,
+              34,
+              44,
+              34,
+              101,
+              115,
+              112,
+              101,
+              99,
+              105,
+              101,
+              34,
+              58,
+              34,
+              67,
+              97,
+              110,
+              105,
+              115,
+              32,
+              108,
+              117,
+              112,
+              117,
+              115,
+              32,
+              102,
+              97,
+              109,
+              105,
+              108,
+              105,
+              97,
+              114,
+              105,
+              115,
+              34,
+              44,
+              34,
+              101,
+              100,
+              97,
+              100,
+              34,
+              58,
+              34,
+              50,
+              34,
+              44,
+              34,
+              114,
+              97,
+              122,
+              97,
+              34,
+              58,
+              34,
+              83,
+              97,
+              110,
+              32,
+              66,
+              101,
+              114,
+              110,
+              97,
+              114,
+              100,
+              111,
+              34,
+              44,
+              34,
+              102,
+              101,
+              99,
+              104,
+              97,
+              73,
+              110,
+              103,
+              114,
+              101,
+              115,
+              111,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              50,
+              45,
+              48,
+              49,
+              45,
+              49,
+              48,
+              34,
+              44,
+              34,
+              99,
+              111,
+              114,
+              114,
+              101,
+              111,
+              80,
+              114,
+              111,
+              112,
+              105,
+              101,
+              116,
+              97,
+              114,
+              105,
+              111,
+              34,
+              58,
+              34,
+              100,
+              117,
+              101,
+              110,
+              97,
+              64,
+              101,
+              109,
+              97,
+              105,
+              108,
+              46,
+              99,
+              111,
+              109,
+              34,
+              125,
+              93
+            ]
+          },
+          "cookie": [],
+          "responseTime": 69,
+          "responseSize": 384
+        },
+        "id": "2b395134-c49e-4f2f-8e49-0e7f3453c1a3",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: nomMascota",
+            "skipped": false
+          },
+          {
+            "assertion": "Respuesta es un arreglo JSON",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "5b1b8fff-46b7-43d4-9454-c5a1dce0eadf",
+          "length": 20,
+          "cycles": 1,
+          "position": 11,
+          "iteration": 0,
+          "httpRequestId": "da5b17c4-9d43-4a6f-932e-fb04108676d1"
+        },
+        "item": {
+          "id": "99eea8aa-4751-4f46-b9cf-105c64eaa569",
+          "name": "Consultar mascota por id",
+          "request": {
+            "url": {
+              "path": [
+                "mascotas",
+                "1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "7efe22b3-0795-4d50-8cbe-c7c30d32873a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: Max\", function(){ pm.expect(pm.response.text()).to.include(\"Max\"); });"
+                ],
+                "_lastExecutionId": "3bce340b-b4a8-40da-8903-342303f51ae6"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "mascotas",
+              "1"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "50c8f546-e6ca-4a33-8d65-36eb6d6d6602",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "794ed47e-1331-4756-ba3c-f0f9afd39abf",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "application/json; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "186"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              105,
+              100,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              49,
+              44,
+              34,
+              110,
+              111,
+              109,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              34,
+              77,
+              97,
+              120,
+              34,
+              44,
+              34,
+              101,
+              115,
+              116,
+              97,
+              100,
+              111,
+              34,
+              58,
+              34,
+              69,
+              115,
+              116,
+              97,
+              98,
+              108,
+              101,
+              34,
+              44,
+              34,
+              101,
+              115,
+              112,
+              101,
+              99,
+              105,
+              101,
+              34,
+              58,
+              34,
+              67,
+              97,
+              110,
+              105,
+              115,
+              32,
+              108,
+              117,
+              112,
+              117,
+              115,
+              32,
+              102,
+              97,
+              109,
+              105,
+              108,
+              105,
+              97,
+              114,
+              105,
+              115,
+              34,
+              44,
+              34,
+              101,
+              100,
+              97,
+              100,
+              34,
+              58,
+              34,
+              51,
+              34,
+              44,
+              34,
+              114,
+              97,
+              122,
+              97,
+              34,
+              58,
+              34,
+              72,
+              117,
+              115,
+              107,
+              121,
+              34,
+              44,
+              34,
+              102,
+              101,
+              99,
+              104,
+              97,
+              73,
+              110,
+              103,
+              114,
+              101,
+              115,
+              111,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              51,
+              45,
+              48,
+              53,
+              45,
+              49,
+              53,
+              34,
+              44,
+              34,
+              99,
+              111,
+              114,
+              114,
+              101,
+              111,
+              80,
+              114,
+              111,
+              112,
+              105,
+              101,
+              116,
+              97,
+              114,
+              105,
+              111,
+              34,
+              58,
+              34,
+              112,
+              114,
+              111,
+              112,
+              105,
+              101,
+              116,
+              97,
+              114,
+              105,
+              111,
+              64,
+              101,
+              109,
+              97,
+              105,
+              108,
+              46,
+              99,
+              111,
+              109,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 51,
+          "responseSize": 186
+        },
+        "id": "99eea8aa-4751-4f46-b9cf-105c64eaa569",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: Max",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "32b9f863-aefd-4348-ac7f-fc46f43e9b46",
+          "length": 20,
+          "cycles": 1,
+          "position": 12,
+          "iteration": 0,
+          "httpRequestId": "5cef405b-561b-4a27-a30d-afb3f9e81e0e"
+        },
+        "item": {
+          "id": "0a299362-f938-4921-b009-5a223770aa6e",
+          "name": "Consultar mascota inexistente",
+          "request": {
+            "url": {
+              "path": [
+                "mascotas",
+                "999"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "f45ba66e-66f4-41e3-a59a-35e15a2df83b",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 404\", function(){ pm.response.to.have.status(404); });"
+                ],
+                "_lastExecutionId": "c62aae14-f413-484f-b563-934b6177b96d"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "mascotas",
+              "999"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "16b02ef9-6ecd-417b-b3b3-9d7a4763c790",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "0fe697ef-8e98-42b6-a2cc-ea1f35594c21",
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "application/json; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "0"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": []
+          },
+          "cookie": [],
+          "responseTime": 4,
+          "responseSize": 0
+        },
+        "id": "0a299362-f938-4921-b009-5a223770aa6e",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 404",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "50ea0a6f-d463-41a5-a1e8-f0e881a761fd",
+          "length": 20,
+          "cycles": 1,
+          "position": 13,
+          "iteration": 0,
+          "httpRequestId": "2c36f34e-5635-401d-b828-1fb7a8b99be4"
+        },
+        "item": {
+          "id": "97fcaed8-64ff-4f32-a580-fa2e94cd2621",
+          "name": "Listar por estado",
+          "request": {
+            "url": {
+              "path": [
+                "mascotas",
+                "estado",
+                "Hospitalizado"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "93504b72-e9a6-481c-8ffe-210af2096199",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: Apolo\", function(){ pm.expect(pm.response.text()).to.include(\"Apolo\"); });",
+                  "pm.test(\"Respuesta es un arreglo JSON\", function(){ pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                ],
+                "_lastExecutionId": "628762f3-3dba-41f5-ae39-77a59d140d7e"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "mascotas",
+              "estado",
+              "Hospitalizado"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "010bf647-2327-4144-bbce-c1815159dd16",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "bd5c71d8-54e4-43d7-92a5-d9d18cae844f",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "application/json; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "197"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              91,
+              123,
+              34,
+              105,
+              100,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              50,
+              44,
+              34,
+              110,
+              111,
+              109,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              34,
+              65,
+              112,
+              111,
+              108,
+              111,
+              34,
+              44,
+              34,
+              101,
+              115,
+              116,
+              97,
+              100,
+              111,
+              34,
+              58,
+              34,
+              72,
+              111,
+              115,
+              112,
+              105,
+              116,
+              97,
+              108,
+              105,
+              122,
+              97,
+              100,
+              111,
+              34,
+              44,
+              34,
+              101,
+              115,
+              112,
+              101,
+              99,
+              105,
+              101,
+              34,
+              58,
+              34,
+              67,
+              97,
+              110,
+              105,
+              115,
+              32,
+              108,
+              117,
+              112,
+              117,
+              115,
+              32,
+              102,
+              97,
+              109,
+              105,
+              108,
+              105,
+              97,
+              114,
+              105,
+              115,
+              34,
+              44,
+              34,
+              101,
+              100,
+              97,
+              100,
+              34,
+              58,
+              34,
+              50,
+              34,
+              44,
+              34,
+              114,
+              97,
+              122,
+              97,
+              34,
+              58,
+              34,
+              83,
+              97,
+              110,
+              32,
+              66,
+              101,
+              114,
+              110,
+              97,
+              114,
+              100,
+              111,
+              34,
+              44,
+              34,
+              102,
+              101,
+              99,
+              104,
+              97,
+              73,
+              110,
+              103,
+              114,
+              101,
+              115,
+              111,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              50,
+              45,
+              48,
+              49,
+              45,
+              49,
+              48,
+              34,
+              44,
+              34,
+              99,
+              111,
+              114,
+              114,
+              101,
+              111,
+              80,
+              114,
+              111,
+              112,
+              105,
+              101,
+              116,
+              97,
+              114,
+              105,
+              111,
+              34,
+              58,
+              34,
+              100,
+              117,
+              101,
+              110,
+              97,
+              64,
+              101,
+              109,
+              97,
+              105,
+              108,
+              46,
+              99,
+              111,
+              109,
+              34,
+              125,
+              93
+            ]
+          },
+          "cookie": [],
+          "responseTime": 48,
+          "responseSize": 197
+        },
+        "id": "97fcaed8-64ff-4f32-a580-fa2e94cd2621",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: Apolo",
+            "skipped": false
+          },
+          {
+            "assertion": "Respuesta es un arreglo JSON",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "b89dea33-6ade-4e40-aadb-a1d1129f4227",
+          "length": 20,
+          "cycles": 1,
+          "position": 14,
+          "iteration": 0,
+          "httpRequestId": "6932f027-7e51-46b3-b5fd-1011a956e1fe"
+        },
+        "item": {
+          "id": "d9166025-ad28-4154-a9d9-1d35c7b60a1c",
+          "name": "Listar por propietario",
+          "request": {
+            "url": {
+              "path": [
+                "mascotas",
+                "propietario"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "correo",
+                  "value": "duena@email.com"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "663a6139-451b-43dc-8cda-5995841d1241",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: Apolo\", function(){ pm.expect(pm.response.text()).to.include(\"Apolo\"); });",
+                  "pm.test(\"Respuesta es un arreglo JSON\", function(){ pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                ],
+                "_lastExecutionId": "3c58772d-7fd7-484f-94fe-27a4c4706072"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "mascotas",
+              "propietario"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [
+              {
+                "key": "correo",
+                "value": "duena@email.com"
+              }
+            ],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "94ec18c9-3aee-406a-a70e-a68a2beecee2",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "6a769cf2-30bc-4a96-a9d0-27a03f8e735b",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "application/json; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "197"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              91,
+              123,
+              34,
+              105,
+              100,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              50,
+              44,
+              34,
+              110,
+              111,
+              109,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              34,
+              65,
+              112,
+              111,
+              108,
+              111,
+              34,
+              44,
+              34,
+              101,
+              115,
+              116,
+              97,
+              100,
+              111,
+              34,
+              58,
+              34,
+              72,
+              111,
+              115,
+              112,
+              105,
+              116,
+              97,
+              108,
+              105,
+              122,
+              97,
+              100,
+              111,
+              34,
+              44,
+              34,
+              101,
+              115,
+              112,
+              101,
+              99,
+              105,
+              101,
+              34,
+              58,
+              34,
+              67,
+              97,
+              110,
+              105,
+              115,
+              32,
+              108,
+              117,
+              112,
+              117,
+              115,
+              32,
+              102,
+              97,
+              109,
+              105,
+              108,
+              105,
+              97,
+              114,
+              105,
+              115,
+              34,
+              44,
+              34,
+              101,
+              100,
+              97,
+              100,
+              34,
+              58,
+              34,
+              50,
+              34,
+              44,
+              34,
+              114,
+              97,
+              122,
+              97,
+              34,
+              58,
+              34,
+              83,
+              97,
+              110,
+              32,
+              66,
+              101,
+              114,
+              110,
+              97,
+              114,
+              100,
+              111,
+              34,
+              44,
+              34,
+              102,
+              101,
+              99,
+              104,
+              97,
+              73,
+              110,
+              103,
+              114,
+              101,
+              115,
+              111,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              50,
+              45,
+              48,
+              49,
+              45,
+              49,
+              48,
+              34,
+              44,
+              34,
+              99,
+              111,
+              114,
+              114,
+              101,
+              111,
+              80,
+              114,
+              111,
+              112,
+              105,
+              101,
+              116,
+              97,
+              114,
+              105,
+              111,
+              34,
+              58,
+              34,
+              100,
+              117,
+              101,
+              110,
+              97,
+              64,
+              101,
+              109,
+              97,
+              105,
+              108,
+              46,
+              99,
+              111,
+              109,
+              34,
+              125,
+              93
+            ]
+          },
+          "cookie": [],
+          "responseTime": 47,
+          "responseSize": 197
+        },
+        "id": "d9166025-ad28-4154-a9d9-1d35c7b60a1c",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: Apolo",
+            "skipped": false
+          },
+          {
+            "assertion": "Respuesta es un arreglo JSON",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "bfce3fdb-fb3f-4a99-bb47-f3b16e85c883",
+          "length": 20,
+          "cycles": 1,
+          "position": 15,
+          "iteration": 0,
+          "httpRequestId": "cacae337-b749-40bc-ac51-53a8cc1a06a0"
+        },
+        "item": {
+          "id": "f8c84e23-d025-4274-95c5-76f09b56d3bd",
+          "name": "Crear mascota valida",
+          "request": {
+            "url": {
+              "path": [
+                "mascotas",
+                "nuevo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nomMascota\": \"Luna\",\n  \"estado\": \"Estable\",\n  \"especie\": \"Felis catus\",\n  \"edad\": \"4\",\n  \"raza\": \"Siames\",\n  \"fechaIngreso\": \"2024-03-12\",\n  \"correoPropietario\": \"luna.duena@email.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "53af5abf-4b49-489e-95fd-043ebc03498d",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: Luna\", function(){ pm.expect(pm.response.text()).to.include(\"Luna\"); });",
+                  "var d=pm.response.json(); pm.collectionVariables.set(\"idMascota\", d.idMascota);"
+                ],
+                "_lastExecutionId": "a6b33ac0-1cdf-4897-b3d9-678f976e6d45"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "mascotas",
+              "nuevo"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "e1557a30-20eb-41b2-93bb-117697d03901",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "191",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"nomMascota\": \"Luna\",\n  \"estado\": \"Estable\",\n  \"especie\": \"Felis catus\",\n  \"edad\": \"4\",\n  \"raza\": \"Siames\",\n  \"fechaIngreso\": \"2024-03-12\",\n  \"correoPropietario\": \"luna.duena@email.com\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "24646112-0deb-4405-b26a-ef3e85b26470",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "application/json; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "176"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              105,
+              100,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              51,
+              44,
+              34,
+              110,
+              111,
+              109,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              34,
+              76,
+              117,
+              110,
+              97,
+              34,
+              44,
+              34,
+              101,
+              115,
+              116,
+              97,
+              100,
+              111,
+              34,
+              58,
+              34,
+              69,
+              115,
+              116,
+              97,
+              98,
+              108,
+              101,
+              34,
+              44,
+              34,
+              101,
+              115,
+              112,
+              101,
+              99,
+              105,
+              101,
+              34,
+              58,
+              34,
+              70,
+              101,
+              108,
+              105,
+              115,
+              32,
+              99,
+              97,
+              116,
+              117,
+              115,
+              34,
+              44,
+              34,
+              101,
+              100,
+              97,
+              100,
+              34,
+              58,
+              34,
+              52,
+              34,
+              44,
+              34,
+              114,
+              97,
+              122,
+              97,
+              34,
+              58,
+              34,
+              83,
+              105,
+              97,
+              109,
+              101,
+              115,
+              34,
+              44,
+              34,
+              102,
+              101,
+              99,
+              104,
+              97,
+              73,
+              110,
+              103,
+              114,
+              101,
+              115,
+              111,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              52,
+              45,
+              48,
+              51,
+              45,
+              49,
+              50,
+              34,
+              44,
+              34,
+              99,
+              111,
+              114,
+              114,
+              101,
+              111,
+              80,
+              114,
+              111,
+              112,
+              105,
+              101,
+              116,
+              97,
+              114,
+              105,
+              111,
+              34,
+              58,
+              34,
+              108,
+              117,
+              110,
+              97,
+              46,
+              100,
+              117,
+              101,
+              110,
+              97,
+              64,
+              101,
+              109,
+              97,
+              105,
+              108,
+              46,
+              99,
+              111,
+              109,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 90,
+          "responseSize": 176
+        },
+        "id": "f8c84e23-d025-4274-95c5-76f09b56d3bd",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: Luna",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "6f2cbcc6-3a0d-4386-8e58-ac649de24401",
+          "length": 20,
+          "cycles": 1,
+          "position": 16,
+          "iteration": 0,
+          "httpRequestId": "3e489b06-1c6b-4c52-9b47-e17902e1b72b"
+        },
+        "item": {
+          "id": "a680bdaf-386b-4377-980b-45c1c5ab5602",
+          "name": "Crear mascota invalida",
+          "request": {
+            "url": {
+              "path": [
+                "mascotas",
+                "nuevo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nomMascota\": \"\",\n  \"estado\": \"Volando\",\n  \"especie\": \"Felis catus\",\n  \"edad\": \"abc\",\n  \"raza\": \"Siames\",\n  \"fechaIngreso\": \"2099-01-01\",\n  \"correoPropietario\": \"correo-malo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "aed149ee-a25d-41c7-8f10-eb2394ebbf1e",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 400\", function(){ pm.response.to.have.status(400); });",
+                  "pm.test(\"Cuerpo contiene: es obligatorio\", function(){ pm.expect(pm.response.text()).to.include(\"es obligatorio\"); });"
+                ],
+                "_lastExecutionId": "577bd295-4685-4341-95aa-420945a738e0"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "mascotas",
+              "nuevo"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "4c096f5e-2956-43f6-b484-7bf99cab1615",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "180",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"nomMascota\": \"\",\n  \"estado\": \"Volando\",\n  \"especie\": \"Felis catus\",\n  \"edad\": \"abc\",\n  \"raza\": \"Siames\",\n  \"fechaIngreso\": \"2099-01-01\",\n  \"correoPropietario\": \"correo-malo\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "df888c67-3487-4ed9-b66d-aee0c6570c16",
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "application/json; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "361"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              91,
+              34,
+              110,
+              111,
+              109,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              58,
+              32,
+              101,
+              115,
+              32,
+              111,
+              98,
+              108,
+              105,
+              103,
+              97,
+              116,
+              111,
+              114,
+              105,
+              111,
+              46,
+              34,
+              44,
+              34,
+              101,
+              115,
+              116,
+              97,
+              100,
+              111,
+              58,
+              32,
+              118,
+              97,
+              108,
+              111,
+              114,
+              32,
+              110,
+              111,
+              32,
+              112,
+              101,
+              114,
+              109,
+              105,
+              116,
+              105,
+              100,
+              111,
+              46,
+              32,
+              68,
+              101,
+              98,
+              101,
+              32,
+              115,
+              101,
+              114,
+              32,
+              117,
+              110,
+              111,
+              32,
+              100,
+              101,
+              32,
+              91,
+              69,
+              115,
+              116,
+              97,
+              98,
+              108,
+              101,
+              44,
+              32,
+              67,
+              114,
+              105,
+              116,
+              105,
+              99,
+              111,
+              44,
+              32,
+              72,
+              111,
+              115,
+              112,
+              105,
+              116,
+              97,
+              108,
+              105,
+              122,
+              97,
+              100,
+              111,
+              93,
+              46,
+              34,
+              44,
+              34,
+              101,
+              100,
+              97,
+              100,
+              58,
+              32,
+              100,
+              101,
+              98,
+              101,
+              32,
+              115,
+              101,
+              114,
+              32,
+              117,
+              110,
+              32,
+              110,
+              117,
+              109,
+              101,
+              114,
+              111,
+              32,
+              100,
+              101,
+              32,
+              49,
+              32,
+              111,
+              32,
+              50,
+              32,
+              100,
+              105,
+              103,
+              105,
+              116,
+              111,
+              115,
+              44,
+              32,
+              115,
+              105,
+              110,
+              32,
+              108,
+              101,
+              116,
+              114,
+              97,
+              115,
+              32,
+              110,
+              105,
+              32,
+              115,
+              105,
+              109,
+              98,
+              111,
+              108,
+              111,
+              115,
+              46,
+              34,
+              44,
+              34,
+              102,
+              101,
+              99,
+              104,
+              97,
+              73,
+              110,
+              103,
+              114,
+              101,
+              115,
+              111,
+              58,
+              32,
+              110,
+              111,
+              32,
+              112,
+              117,
+              101,
+              100,
+              101,
+              32,
+              115,
+              101,
+              114,
+              32,
+              117,
+              110,
+              97,
+              32,
+              102,
+              101,
+              99,
+              104,
+              97,
+              32,
+              102,
+              117,
+              116,
+              117,
+              114,
+              97,
+              46,
+              34,
+              44,
+              34,
+              99,
+              111,
+              114,
+              114,
+              101,
+              111,
+              80,
+              114,
+              111,
+              112,
+              105,
+              101,
+              116,
+              97,
+              114,
+              105,
+              111,
+              58,
+              32,
+              102,
+              111,
+              114,
+              109,
+              97,
+              116,
+              111,
+              32,
+              105,
+              110,
+              118,
+              97,
+              108,
+              105,
+              100,
+              111,
+              46,
+              32,
+              68,
+              101,
+              98,
+              101,
+              32,
+              116,
+              101,
+              110,
+              101,
+              114,
+              32,
+              108,
+              97,
+              32,
+              102,
+              111,
+              114,
+              109,
+              97,
+              32,
+              117,
+              115,
+              117,
+              97,
+              114,
+              105,
+              111,
+              64,
+              100,
+              111,
+              109,
+              105,
+              110,
+              105,
+              111,
+              46,
+              99,
+              111,
+              109,
+              44,
+              32,
+              115,
+              105,
+              110,
+              32,
+              101,
+              115,
+              112,
+              97,
+              99,
+              105,
+              111,
+              115,
+              32,
+              110,
+              105,
+              32,
+              99,
+              97,
+              114,
+              97,
+              99,
+              116,
+              101,
+              114,
+              101,
+              115,
+              32,
+              101,
+              115,
+              112,
+              101,
+              99,
+              105,
+              97,
+              108,
+              101,
+              115,
+              32,
+              110,
+              111,
+              32,
+              112,
+              101,
+              114,
+              109,
+              105,
+              116,
+              105,
+              100,
+              111,
+              115,
+              46,
+              34,
+              93
+            ]
+          },
+          "cookie": [],
+          "responseTime": 44,
+          "responseSize": 361
+        },
+        "id": "a680bdaf-386b-4377-980b-45c1c5ab5602",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 400",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: es obligatorio",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "c9e7ada4-f311-4592-b52d-56e698704ec9",
+          "length": 20,
+          "cycles": 1,
+          "position": 17,
+          "iteration": 0,
+          "httpRequestId": "62106776-1437-47fc-bb92-692647caf6c0"
+        },
+        "item": {
+          "id": "958e5433-f4ef-4844-a773-c76bb29fa979",
+          "name": "Modificar mascota",
+          "request": {
+            "url": {
+              "path": [
+                "mascotas",
+                "modificar"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idMascota\": {{idMascota}},\n  \"nomMascota\": \"Luna\",\n  \"estado\": \"Hospitalizado\",\n  \"especie\": \"Felis catus\",\n  \"edad\": \"4\",\n  \"raza\": \"Siames\",\n  \"fechaIngreso\": \"2024-03-12\",\n  \"correoPropietario\": \"luna.duena@email.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "7bdf9124-34f7-4765-ac28-565c5bf5f064",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: Hospitalizado\", function(){ pm.expect(pm.response.text()).to.include(\"Hospitalizado\"); });"
+                ],
+                "_lastExecutionId": "c9787223-8c7c-4cc8-bb18-6d0c731d3d60"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "mascotas",
+              "modificar"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "952b9f65-3fa5-47f7-bba4-ca33958001c8",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "215",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"idMascota\": 3,\n  \"nomMascota\": \"Luna\",\n  \"estado\": \"Hospitalizado\",\n  \"especie\": \"Felis catus\",\n  \"edad\": \"4\",\n  \"raza\": \"Siames\",\n  \"fechaIngreso\": \"2024-03-12\",\n  \"correoPropietario\": \"luna.duena@email.com\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "2df2d0ef-e8dd-4749-aa11-94abe474a457",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:16 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "application/json; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "182"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              105,
+              100,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              51,
+              44,
+              34,
+              110,
+              111,
+              109,
+              77,
+              97,
+              115,
+              99,
+              111,
+              116,
+              97,
+              34,
+              58,
+              34,
+              76,
+              117,
+              110,
+              97,
+              34,
+              44,
+              34,
+              101,
+              115,
+              116,
+              97,
+              100,
+              111,
+              34,
+              58,
+              34,
+              72,
+              111,
+              115,
+              112,
+              105,
+              116,
+              97,
+              108,
+              105,
+              122,
+              97,
+              100,
+              111,
+              34,
+              44,
+              34,
+              101,
+              115,
+              112,
+              101,
+              99,
+              105,
+              101,
+              34,
+              58,
+              34,
+              70,
+              101,
+              108,
+              105,
+              115,
+              32,
+              99,
+              97,
+              116,
+              117,
+              115,
+              34,
+              44,
+              34,
+              101,
+              100,
+              97,
+              100,
+              34,
+              58,
+              34,
+              52,
+              34,
+              44,
+              34,
+              114,
+              97,
+              122,
+              97,
+              34,
+              58,
+              34,
+              83,
+              105,
+              97,
+              109,
+              101,
+              115,
+              34,
+              44,
+              34,
+              102,
+              101,
+              99,
+              104,
+              97,
+              73,
+              110,
+              103,
+              114,
+              101,
+              115,
+              111,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              52,
+              45,
+              48,
+              51,
+              45,
+              49,
+              50,
+              34,
+              44,
+              34,
+              99,
+              111,
+              114,
+              114,
+              101,
+              111,
+              80,
+              114,
+              111,
+              112,
+              105,
+              101,
+              116,
+              97,
+              114,
+              105,
+              111,
+              34,
+              58,
+              34,
+              108,
+              117,
+              110,
+              97,
+              46,
+              100,
+              117,
+              101,
+              110,
+              97,
+              64,
+              101,
+              109,
+              97,
+              105,
+              108,
+              46,
+              99,
+              111,
+              109,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 58,
+          "responseSize": 182
+        },
+        "id": "958e5433-f4ef-4844-a773-c76bb29fa979",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: Hospitalizado",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "bd9196ff-5cde-4a61-9bae-6866a996f41e",
+          "length": 20,
+          "cycles": 1,
+          "position": 18,
+          "iteration": 0,
+          "httpRequestId": "9079f533-9f0b-49ea-bb9b-b830ad8765fc"
+        },
+        "item": {
+          "id": "5f7875a7-bfed-452a-ae3b-240d2c703ab8",
+          "name": "Eliminar mascota",
+          "request": {
+            "url": {
+              "path": [
+                "mascotas",
+                "{{idMascota}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "77e7bec9-7dba-49fd-a4dd-f55a4aedec61",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: true\", function(){ pm.expect(pm.response.text()).to.include(\"true\"); });"
+                ],
+                "_lastExecutionId": "d0e88dc3-499d-491e-a20f-68c83fe3af9a"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "mascotas",
+              "3"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "03c17804-f49b-46b5-9fb6-3bf15db2c724",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "0",
+              "system": true
+            }
+          ],
+          "method": "POST"
+        },
+        "response": {
+          "id": "05b094f1-7834-4697-809b-9d78bc3bf64d",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:17 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "application/json; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "4"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              116,
+              114,
+              117,
+              101
+            ]
+          },
+          "cookie": [],
+          "responseTime": 49,
+          "responseSize": 4
+        },
+        "id": "5f7875a7-bfed-452a-ae3b-240d2c703ab8",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: true",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "62efe2fa-e4b1-4310-9446-3eb8709bbcd5",
+          "length": 20,
+          "cycles": 1,
+          "position": 19,
+          "iteration": 0,
+          "httpRequestId": "cc5a324c-c691-4cee-bc97-12484a49f28d"
+        },
+        "item": {
+          "id": "97be6414-d24f-4fcc-a912-3361fde4fdb9",
+          "name": "Eliminar mascota inexistente (false)",
+          "request": {
+            "url": {
+              "path": [
+                "mascotas",
+                "999999"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "0eb62c11-02f5-49e9-a5c4-a2032621933f",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Tiempo de respuesta menor a 2000 ms\", function(){ pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test(\"Codigo HTTP 200\", function(){ pm.response.to.have.status(200); });",
+                  "pm.test(\"Cuerpo contiene: false\", function(){ pm.expect(pm.response.text()).to.include(\"false\"); });"
+                ],
+                "_lastExecutionId": "53101d18-5840-4851-aab4-fc61e7b03ab4"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "mascotas",
+              "999999"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "2de93c63-ae82-4c50-bced-02d30fabba1b",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "0",
+              "system": true
+            }
+          ],
+          "method": "POST"
+        },
+        "response": {
+          "id": "c3bff4ef-93b6-45bf-b328-190c958b04fd",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 08 Oct 2026 04:01:17 GMT"
+            },
+            {
+              "key": "Content-type",
+              "value": "application/json; charset=UTF-8"
+            },
+            {
+              "key": "Content-length",
+              "value": "5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              102,
+              97,
+              108,
+              115,
+              101
+            ]
+          },
+          "cookie": [],
+          "responseTime": 51,
+          "responseSize": 5
+        },
+        "id": "97be6414-d24f-4fcc-a912-3361fde4fdb9",
+        "assertions": [
+          {
+            "assertion": "Tiempo de respuesta menor a 2000 ms",
+            "skipped": false
+          },
+          {
+            "assertion": "Codigo HTTP 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Cuerpo contiene: false",
+            "skipped": false
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 2087
+    },
+    "failures": [],
+    "error": null
+  }
+}

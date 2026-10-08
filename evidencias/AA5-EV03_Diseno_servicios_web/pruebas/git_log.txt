@@ -1,0 +1,9 @@
+de5f2d0 AA5-EV02: agrega coleccion Postman, ENDPOINT y servidor de verificacion de la API
+0eb9f15 AA5-EV03: agrega consultas por id, estado y propietario en el repositorio y el servicio de mascotas
+98a291d AA5-EV03: expone GET /mascotas/{id}, /estado/{estado} y /propietario en el controlador
+7b958ac AA5-EV03: agrega GET /auth/usuarios sin exponer las claves
+843f9eb AA5-EV03: actualiza el servidor de verificacion con los nuevos servicios
+b5baa20 AA5-EV03: documenta los servicios (OpenAPI y guia en markdown)
+1feea49 AA5-EV03: amplia la coleccion Postman a 20 peticiones y actualiza ENDPOINT
+6fa20e0 AA5-EV03: actualiza README y archivo del repositorio
+35

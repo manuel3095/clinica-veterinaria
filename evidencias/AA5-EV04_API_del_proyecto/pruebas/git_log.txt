@@ -1,0 +1,7 @@
+b5baa20 AA5-EV03: documenta los servicios (OpenAPI y guia en markdown)
+1feea49 AA5-EV03: amplia la coleccion Postman a 20 peticiones y actualiza ENDPOINT
+6fa20e0 AA5-EV03: actualiza README y archivo del repositorio
+76ad837 AA5-EV04: define server.port=3000 para que la API coincida con la URL base documentada
+32a3624 AA5-EV04: hace repetible la coleccion Postman, corrige una prueba y agrega el entorno local
+3507a5b AA5-EV04: actualiza ENDPOINT, README y archivo del repositorio
+38

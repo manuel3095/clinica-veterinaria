@@ -1,0 +1,160 @@
+=== 01 GET /mascotas/mostrar
+$ curl -X GET http://localhost:3000/mascotas/mostrar
+HTTP/1.1 200 OK
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 384
+
+[{"idMascota":1,"nomMascota":"Max","estado":"Estable","especie":"Canis lupus familiaris","edad":"3","raza":"Husky","fechaIngreso":"2023-05-15","correoPropietario":"propietario@email.com"},{"idMascota":2,"nomMascota":"Apolo","estado":"Hospitalizado","especie":"Canis lupus familiaris","edad":"2","raza":"San Bernardo","fechaIngreso":"2022-01-10","correoPropietario":"duena@email.com"}]
+[HTTP 200]
+
+=== 02 GET /mascotas/1 (por id)
+$ curl -X GET http://localhost:3000/mascotas/1
+HTTP/1.1 200 OK
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 186
+
+{"idMascota":1,"nomMascota":"Max","estado":"Estable","especie":"Canis lupus familiaris","edad":"3","raza":"Husky","fechaIngreso":"2023-05-15","correoPropietario":"propietario@email.com"}
+[HTTP 200]
+
+=== 03 GET /mascotas/999 (no existe)
+$ curl -X GET http://localhost:3000/mascotas/999
+HTTP/1.1 404 Not Found
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 0
+
+
+[HTTP 404]
+
+=== 04 GET /mascotas/estado/Hospitalizado
+$ curl -X GET http://localhost:3000/mascotas/estado/Hospitalizado
+HTTP/1.1 200 OK
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 197
+
+[{"idMascota":2,"nomMascota":"Apolo","estado":"Hospitalizado","especie":"Canis lupus familiaris","edad":"2","raza":"San Bernardo","fechaIngreso":"2022-01-10","correoPropietario":"duena@email.com"}]
+[HTTP 200]
+
+=== 05 GET /mascotas/estado/Critico (sin resultados)
+$ curl -X GET http://localhost:3000/mascotas/estado/Critico
+HTTP/1.1 200 OK
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 2
+
+[]
+[HTTP 200]
+
+=== 06 GET /mascotas/propietario?correo=duena@email.com
+$ curl -X GET http://localhost:3000/mascotas/propietario?correo=duena@email.com
+HTTP/1.1 200 OK
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 197
+
+[{"idMascota":2,"nomMascota":"Apolo","estado":"Hospitalizado","especie":"Canis lupus familiaris","edad":"2","raza":"San Bernardo","fechaIngreso":"2022-01-10","correoPropietario":"duena@email.com"}]
+[HTTP 200]
+
+=== 07 POST /auth/registro (recepcion2)
+$ curl -X POST http://localhost:3000/auth/registro -H Content-Type: application/json -d {"nombreUsuario":"recepcion2","clave":"Veterinaria2026"}
+HTTP/1.1 200 OK
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: text/plain; charset=UTF-8
+Content-length: 32
+
+Usuario registrado correctamente
+[HTTP 200]
+
+=== 08 GET /auth/usuarios
+$ curl -X GET http://localhost:3000/auth/usuarios
+HTTP/1.1 200 OK
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 91
+
+[{"idUsuario":1,"nombreUsuario":"recepcion1"},{"idUsuario":2,"nombreUsuario":"recepcion2"}]
+[HTTP 200]
+
+=== 09 POST /mascotas/nuevo (Luna)
+$ curl -X POST http://localhost:3000/mascotas/nuevo -H Content-Type: application/json -d {"nomMascota":"Luna","estado":"Estable","especie":"Felis catus","edad":"4","raza":"Siames","fechaIngreso":"2024-03-12","correoPropietario":"luna.duena@email.com"}
+HTTP/1.1 200 OK
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 176
+
+{"idMascota":3,"nomMascota":"Luna","estado":"Estable","especie":"Felis catus","edad":"4","raza":"Siames","fechaIngreso":"2024-03-12","correoPropietario":"luna.duena@email.com"}
+[HTTP 200]
+
+=== 10 POST /mascotas/nuevo (datos invalidos)
+$ curl -X POST http://localhost:3000/mascotas/nuevo -H Content-Type: application/json -d {"nomMascota":"","estado":"Volando","especie":"Felis catus","edad":"abc","raza":"Siames","fechaIngreso":"2099-01-01","correoPropietario":"correo-malo"}
+HTTP/1.1 400 Bad Request
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 361
+
+["nomMascota: es obligatorio.","estado: valor no permitido. Debe ser uno de [Estable, Critico, Hospitalizado].","edad: debe ser un numero de 1 o 2 digitos, sin letras ni simbolos.","fechaIngreso: no puede ser una fecha futura.","correoPropietario: formato invalido. Debe tener la forma usuario@dominio.com, sin espacios ni caracteres especiales no permitidos."]
+[HTTP 400]
+
+=== 11 POST /mascotas/modificar (estado, fecha y correo)
+$ curl -X POST http://localhost:3000/mascotas/modificar -H Content-Type: application/json -d {"idMascota":3,"nomMascota":"Luna","estado":"Critico","especie":"Felis catus","edad":"4","raza":"Siames","fechaIngreso":"2024-04-01","correoPropietario":"nuevo.duenio@email.com"}
+HTTP/1.1 200 OK
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 178
+
+{"idMascota":3,"nomMascota":"Luna","estado":"Critico","especie":"Felis catus","edad":"4","raza":"Siames","fechaIngreso":"2024-04-01","correoPropietario":"nuevo.duenio@email.com"}
+[HTTP 200]
+
+=== 12 GET /mascotas/3 (confirma la modificacion)
+$ curl -X GET http://localhost:3000/mascotas/3
+HTTP/1.1 200 OK
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 178
+
+{"idMascota":3,"nomMascota":"Luna","estado":"Critico","especie":"Felis catus","edad":"4","raza":"Siames","fechaIngreso":"2024-04-01","correoPropietario":"nuevo.duenio@email.com"}
+[HTTP 200]
+
+=== 13 POST /mascotas/3 (eliminar)
+$ curl -X POST http://localhost:3000/mascotas/3
+HTTP/1.1 200 OK
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 4
+
+true
+[HTTP 200]
+
+=== 14 POST /mascotas/3 (eliminar de nuevo)
+$ curl -X POST http://localhost:3000/mascotas/3
+HTTP/1.1 200 OK
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 5
+
+false
+[HTTP 200]
+
+=== 15 GET /mascotas/3 (ya no existe)
+$ curl -X GET http://localhost:3000/mascotas/3
+HTTP/1.1 404 Not Found
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: application/json; charset=UTF-8
+Content-length: 0
+
+
+[HTTP 404]
+
+=== 16 POST /auth/login (recepcion2)
+$ curl -X POST http://localhost:3000/auth/login -H Content-Type: application/json -d {"nombreUsuario":"recepcion2","clave":"Veterinaria2026"}
+HTTP/1.1 200 OK
+Date: Wed, 07 Oct 2026 00:28:16 GMT
+Content-type: text/plain; charset=UTF-8
+Content-length: 27
+
+Autenticacion satisfactoria
+[HTTP 200]
+

@@ -6,3 +6,7 @@ build/
 dist/
 .idea/
 *.iml
+node_modules/
+*.log
+.vscode/
+.DS_Store
